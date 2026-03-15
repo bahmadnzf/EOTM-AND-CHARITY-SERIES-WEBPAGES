@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/eotm", "dest": "/eotm-charity-series.html" },
+    { "src": "/eotm-charity-series", "dest": "/eotm-charity-series.html" },
+    { "src": "/charity", "dest": "/charity-series.html" },
+    { "src": "/charity-series", "dest": "/charity-series.html" }
+  ]
+}

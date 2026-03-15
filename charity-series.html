@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Charity Series | Executives Helping Initiative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #0f2d1c;
+      --forest-mid: #1a4530;
+      --forest-light: #265e42;
+      --sage: #4a8c63;
+      --sage-light: #6eb88a;
+      --amber: #c97b2a;
+      --amber-light: #e89c4a;
+      --warm-white: #fdf8f2;
+      --off-white: #f4ede2;
+      --cream: #ede4d4;
+      --text: #1a2e22;
+      --text-mid: #3d5a45;
+      --text-soft: #6e8f79;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--warm-white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--cream);
+      padding: 16px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; flex-direction: column;
+      text-decoration: none;
+    }
+    .logo-primary {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--forest); line-height: 1.1;
+    }
+    .logo-sub {
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-soft);
+      font-weight: 500;
+    }
+    .header-nav { display: flex; gap: 28px; align-items: center; }
+    .header-nav a {
+      text-decoration: none; font-size: 0.85rem;
+      color: var(--text-mid); font-weight: 500; letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--forest); }
+    .header-btn {
+      background: var(--forest); color: var(--warm-white) !important;
+      padding: 9px 22px; border-radius: 100px;
+    }
+    .header-btn:hover { background: var(--forest-light) !important; }
+
+    /* ── CINEMATIC HERO ── */
+    .c-hero {
+      min-height: 100vh;
+      background: var(--forest);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 0 80px;
+    }
+    /* Grain texture overlay */
+    .c-hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+      opacity: 0.35; pointer-events: none;
+    }
+    /* Gradient layers */
+    .c-hero::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 2;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,123,42,0.12) 0%, transparent 55%),
+        linear-gradient(to bottom, transparent 30%, rgba(15,45,28,0.85) 70%, var(--forest) 100%);
+    }
+
+    /* Decorative arcs */
+    .hero-arc {
+      position: absolute; z-index: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .hero-arc-1 { width: 600px; height: 600px; top: -200px; right: -150px; }
+    .hero-arc-2 { width: 350px; height: 350px; bottom: 100px; left: -100px; }
+
+    .c-hero-content {
+      position: relative; z-index: 3;
+      padding: 0 6%;
+      max-width: 900px;
+    }
+    .c-hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 24px;
+    }
+    .c-hero-tag-dot {
+      width: 32px; height: 1px; background: var(--amber-light);
+    }
+    .c-hero-tag span {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--amber-light);
+    }
+    .c-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700; line-height: 0.95;
+      color: var(--warm-white); margin-bottom: 28px;
+    }
+    .c-hero h1 em {
+      font-style: italic; color: var(--amber-light);
+    }
+    .c-hero-desc {
+      max-width: 540px;
+      font-size: 1.05rem; line-height: 1.75;
+      color: rgba(255,255,255,0.6); font-weight: 300;
+      margin-bottom: 40px;
+    }
+    .c-hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .pill-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 100px;
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .pill-btn-amber {
+      background: var(--amber); color: var(--warm-white);
+    }
+    .pill-btn-amber:hover { background: var(--amber-light); transform: translateY(-2px); }
+    .pill-btn-ghost {
+      border: 1.5px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8);
+    }
+    .pill-btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+    .scroll-hint {
+      position: absolute; right: 6%; bottom: 48px; z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(255,255,255,0.25); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      writing-mode: vertical-rl; text-orientation: mixed;
+    }
+    .scroll-hint::before {
+      content: '';
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    }
+
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      background: var(--amber);
+      padding: 36px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .intro-strip p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 400; font-style: italic;
+      color: var(--warm-white); max-width: 700px; line-height: 1.4;
+    }
+    .intro-strip a {
+      white-space: nowrap;
+      background: var(--forest); color: var(--warm-white);
+      padding: 12px 28px; border-radius: 100px;
+      text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .intro-strip a:hover { background: var(--forest-light); }
+
+    /* ── FLAGSHIP SECTION ── */
+    .flagship {
+      padding: 96px 6%;
+      background: var(--warm-white);
+    }
+    .flagship-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 5fr 4fr; gap: 96px;
+      align-items: start;
+    }
+    .flagship-left {}
+    .flagship-label {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .flagship-label span {
+      width: 36px; height: 1.5px; background: var(--sage);
+    }
+    .flagship-label p {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage);
+    }
+    .flagship h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--forest); margin-bottom: 28px;
+    }
+    .flagship-body {
+      font-size: 1.05rem; line-height: 1.8;
+      color: var(--text-mid); margin-bottom: 16px;
+    }
+    .flagship-pull {
+      margin: 36px 0; padding: 24px 28px;
+      border-left: 3px solid var(--amber);
+      background: var(--off-white);
+    }
+    .flagship-pull p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-style: italic;
+      color: var(--forest); line-height: 1.5;
+    }
+
+    /* pillars list on right */
+    .flagship-right {
+      position: sticky; top: 96px;
+    }
+    .pillar-list { display: flex; flex-direction: column; gap: 2px; }
+    .pillar {
+      background: var(--off-white);
+      border: 1px solid var(--cream);
+      padding: 0; overflow: hidden;
+      transition: all 0.2s;
+    }
+    .pillar:hover { border-color: var(--sage-light); }
+    .pillar-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; cursor: pointer;
+    }
+    .pillar-name {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .pillar-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--sage); font-weight: 600;
+    }
+    .pillar-name h4 {
+      font-size: 0.95rem; font-weight: 600; color: var(--forest);
+    }
+    .pillar-chevron {
+      font-size: 1rem; color: var(--text-soft); transition: transform 0.25s;
+    }
+    .pillar.open .pillar-chevron { transform: rotate(180deg); }
+    .pillar-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease;
+      padding: 0 20px;
+    }
+    .pillar.open .pillar-body { max-height: 120px; padding: 0 20px 18px; }
+    .pillar-body p {
+      font-size: 0.875rem; line-height: 1.65; color: var(--text-mid);
+    }
+
+    /* ── MONTHLY RHYTHM ── */
+    .rhythm-section {
+      background: var(--off-white);
+      padding: 96px 6%;
+    }
+    .rhythm-inner { max-width: 1160px; margin: 0 auto; }
+    .rhythm-header { text-align: center; margin-bottom: 64px; }
+    .rhythm-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
+      color: var(--forest); margin-top: 8px;
+    }
+    .rhythm-header p {
+      max-width: 560px; margin: 16px auto 0;
+      font-size: 1rem; color: var(--text-soft); line-height: 1.7;
+    }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0; position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; top: 28px; left: 12.5%; right: 12.5%;
+      height: 1px; background: var(--cream);
+    }
+    .tl-step { text-align: center; padding: 0 12px; }
+    .tl-dot {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--warm-white); border: 2px solid var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin: 0 auto 20px;
+      position: relative; z-index: 1;
+      transition: all 0.2s;
+    }
+    .tl-step:hover .tl-dot {
+      background: var(--forest); border-color: var(--forest);
+      box-shadow: 0 8px 24px rgba(15,45,28,0.2);
+    }
+    .tl-step h4 {
+      font-weight: 600; font-size: 0.95rem;
+      color: var(--forest); margin-bottom: 8px;
+    }
+    .tl-step p { font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; }
+
+    /* ── DONATE ── */
+    .donate-section {
+      background: var(--forest);
+      padding: 96px 6%;
+      position: relative; overflow: hidden;
+    }
+    .donate-section::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
+    }
+    .donate-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: start;
+    }
+    .donate-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700;
+      color: var(--warm-white); margin-bottom: 20px;
+    }
+    .donate-left p {
+      font-size: 1rem; line-height: 1.75;
+      color: rgba(255,255,255,0.6); margin-bottom: 32px;
+    }
+    .account-cards { display: flex; flex-direction: column; gap: 16px; }
+    .account-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px 24px; border-radius: 8px;
+    }
+    .account-card h5 {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--amber-light); margin-bottom: 12px;
+    }
+    .account-card p {
+      font-size: 0.9rem; color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+    .account-card strong { color: var(--warm-white); }
+
+    .donate-right {}
+    .ways-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--sage-light); margin-bottom: 24px;
+    }
+    .ways-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin-bottom: 36px;
+    }
+    .way-tile {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 18px; border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .way-tile:hover {
+      background: rgba(201,123,42,0.1);
+      border-color: rgba(201,123,42,0.3);
+    }
+    .way-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .way-tile h4 { font-size: 0.9rem; font-weight: 600; color: var(--warm-white); margin-bottom: 5px; }
+    .way-tile p { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .contact-info-block {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 24px; border-radius: 8px;
+    }
+    .contact-info-block p {
+      font-size: 0.875rem; color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+    }
+    .contact-info-block a { color: var(--amber-light); text-decoration: none; }
+
+    /* ── SOCIAL PROOF ── */
+    .social-section {
+      background: var(--cream);
+      padding: 64px 6%; text-align: center;
+    }
+    .social-section p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic;
+      color: var(--text-mid); margin-bottom: 28px;
+    }
+    .social-links {
+      display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+    }
+    .social-pill {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--warm-white); border: 1px solid rgba(0,0,0,0.1);
+      padding: 10px 22px; border-radius: 100px;
+      text-decoration: none; font-size: 0.875rem; font-weight: 500;
+      color: var(--forest); transition: all 0.2s;
+    }
+    .social-pill:hover { background: var(--forest); color: var(--warm-white); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--forest);
+      padding: 40px 6% 28px;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .site-footer-left .logo-primary { color: var(--warm-white); }
+    .site-footer-left .logo-sub { color: rgba(255,255,255,0.3); }
+    .site-footer-links {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .site-footer-links a {
+      color: rgba(255,255,255,0.4); text-decoration: none;
+      font-size: 0.8rem; transition: color 0.2s;
+    }
+    .site-footer-links a:hover { color: var(--amber-light); }
+    .site-footer-copy {
+      width: 100%; text-align: center;
+      font-size: 0.75rem; color: rgba(255,255,255,0.18);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 20px; margin-top: 12px;
+    }
+
+    /* ── ANIMATE ── */
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .c-hero-tag  { animation: heroIn 1s 0.2s both; }
+    .c-hero h1   { animation: heroIn 1s 0.4s both; }
+    .c-hero-desc { animation: heroIn 1s 0.6s both; }
+    .c-hero-actions { animation: heroIn 1s 0.8s both; }
+
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.in { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .flagship-inner, .donate-inner { grid-template-columns: 1fr; gap: 48px; }
+      .flagship-right { position: static; }
+      .timeline { grid-template-columns: 1fr 1fr; }
+      .timeline::before { display: none; }
+      .header-nav { display: none; }
+      .ways-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+      .timeline { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="https://www.executivesinitiative.com" class="logo">
+      <span class="logo-primary">Executives Helping Initiative</span>
+      <span class="logo-sub">The Charity Series</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#flagship">About</a>
+      <a href="#pillars">Pillars</a>
+      <a href="#donate">Donate</a>
+      <a href="eotm-charity-series.html">EOTM Page</a>
+      <a href="https://www.executivesinitiative.com" target="_blank" class="header-btn">Visit EHI</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="c-hero">
+    <div class="hero-arc hero-arc-1"></div>
+    <div class="hero-arc hero-arc-2"></div>
+    <div class="c-hero-content">
+      <div class="c-hero-tag">
+        <div class="c-hero-tag-dot"></div>
+        <span>EHI Flagship Program — Active Monthly</span>
+      </div>
+      <h1>The<br /><em>Charity</em><br />Series</h1>
+      <p class="c-hero-desc">
+        A flagship program within Executives Helping Initiative — responding to urgent needs and uplifting lives across Nigeria with strategic, compassionate action. Every month. Without fail.
+      </p>
+      <div class="c-hero-actions">
+        <a href="#donate" class="pill-btn pill-btn-amber">Give Now</a>
+        <a href="#flagship" class="pill-btn pill-btn-ghost">Discover the Mission</a>
+      </div>
+    </div>
+    <div class="scroll-hint">Explore</div>
+  </section>
+
+  <!-- INTRO STRIP -->
+  <div class="intro-strip">
+    <p>"We step beyond intention and show up where help is needed most — not just with words, but with action."</p>
+    <a href="#donate">Support Us</a>
+  </div>
+
+  <!-- FLAGSHIP SECTION -->
+  <section class="flagship" id="flagship">
+    <div class="flagship-inner">
+      <!-- Left: narrative -->
+      <div class="flagship-left">
+        <div class="flagship-label">
+          <span></span>
+          <p>Our Flagship Program</p>
+        </div>
+        <h2 class="fade-up">The Charity Series</h2>
+        <p class="flagship-body fade-up">
+          The Charity Series is a flagship program within Executives Helping Initiative (EHI) designed to respond to urgent needs and uplift lives with strategic, compassionate action. It sits at the heart of our End of the Month Outreach — a signature initiative carried out at the close of each month.
+        </p>
+        <p class="flagship-body fade-up">
+          Founded on the 26th of December 2013, EHI began by visiting orphanages. Over the years, as our volunteer family grew to over 1,000 strong, the reach expanded to schools, hospitals, prisons, and inner-city communities every month. The Charity Series is the vehicle through which that compassion becomes concrete, meaningful action.
+        </p>
+        <div class="flagship-pull fade-up">
+          <p>"These moments reflect who we are: people helping people with purpose, presence, and love."</p>
+        </div>
+        <p class="flagship-body fade-up">
+          Recognised by SME 100 Nigeria in 2018 for invaluable contributions to active citizenry, EHI has grown into a global organisation. But our monthly outreach commitment remains unchanged — because those who need help cannot wait.
+        </p>
+      </div>
+
+      <!-- Right: accordion pillars -->
+      <div class="flagship-right fade-up" id="pillars">
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);margin-bottom:16px;">What We Do — Five Pillars</p>
+        <div class="pillar-list">
+          <div class="pillar open">
+            <div class="pillar-top" onclick="togglePillar(this)">
+              <div class="pillar-name">
+                <span class="pillar-num">01</span>
+                <h4>Orphanage Visitation</h4>
+              </div>
+              <span class="pillar-chevron">▾</span>
+            </div>
+            <div class="pillar-body">
+              <p>We visit orphanage homes monthly to shower children with love, food, supplies, and joy — restoring hope and showing every child they are deeply valued.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-top" onclick="togglePillar(this)">
+              <div class="pillar-name">
+                <span class="pillar-num">02</span>
+                <h4>Community Visits</h4>
+              </div>
+              <span class="pillar-chevron">▾</span>
+            </div>
+            <div class="pillar-body">
+              <p>Our teams step into underserved communities — over 20 in Lagos alone — with direct engagement and tangible support for residents who need it most.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-top" onclick="togglePillar(this)">
+              <div class="pillar-name">
+                <span class="pillar-num">03</span>
+                <h4>Medical & Welfare Support</h4>
+              </div>
+              <span class="pillar-chevron">▾</span>
+            </div>
+            <div class="pillar-body">
+              <p>We plan medical outreach events bringing healthcare professionals to communities with limited access — providing check-ups, welfare, and medical supplies.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-top" onclick="togglePillar(this)">
+              <div class="pillar-name">
+                <span class="pillar-num">04</span>
+                <h4>Healthcare Support</h4>
+              </div>
+              <span class="pillar-chevron">▾</span>
+            </div>
+            <div class="pillar-body">
+              <p>From medicine donations to health awareness campaigns, we advocate for good health and bring care closer to those who cannot easily access it.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-top" onclick="togglePillar(this)">
+              <div class="pillar-name">
+                <span class="pillar-num">05</span>
+                <h4>Food Support</h4>
+              </div>
+              <span class="pillar-chevron">▾</span>
+            </div>
+            <div class="pillar-body">
+              <p>We distribute meals and food packages to families, orphanages, and vulnerable communities. Contributing to poverty alleviation — one meal at a time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONTHLY RHYTHM -->
+  <section class="rhythm-section">
+    <div class="rhythm-inner">
+      <div class="rhythm-header fade-up">
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage);">How It Works</p>
+        <h2>Monthly. Consistent. Intentional.</h2>
+        <p>Every End of the Month, EHI's Charity Series springs into action. Here's how each cycle unfolds — with care and precision.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-step fade-up">
+          <div class="tl-dot">🗓️</div>
+          <h4>Planning</h4>
+          <p>We identify communities, organisations, and individuals in need for the current month's outreach.</p>
+        </div>
+        <div class="tl-step fade-up">
+          <div class="tl-dot">📦</div>
+          <h4>Resource Mobilisation</h4>
+          <p>Donations, food, medicine, and materials are gathered through our volunteer and donor network.</p>
+        </div>
+        <div class="tl-step fade-up">
+          <div class="tl-dot">🤝</div>
+          <h4>Outreach Day</h4>
+          <p>Our teams show up — at orphanages, communities, hospitals — delivering support, presence, and love.</p>
+        </div>
+        <div class="tl-step fade-up">
+          <div class="tl-dot">📣</div>
+          <h4>Reporting & Follow-up</h4>
+          <p>We document our impact, share stories, and begin planning the next month's cycle immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section class="donate-section" id="donate">
+    <div class="donate-inner">
+      <div class="donate-left fade-up">
+        <h2>Support the Charity Series</h2>
+        <p>
+          Your support ensures that The Charity Series continues to bring hope, joy, and meaningful change to communities who need it most. Every contribution — no matter the size — makes a real difference.
+        </p>
+        <div class="account-cards">
+          <div class="account-card">
+            <h5>Monthly EOTM Donations</h5>
+            <p>
+              Account Name: <strong>EHI Monthly Celebration</strong><br/>
+              Account Number: <strong>0470292139</strong><br/>
+              Bank: <strong>GT Bank</strong>
+            </p>
+          </div>
+          <div class="account-card">
+            <h5>General Donations</h5>
+            <p>
+              Account Name: <strong>Executives Helping Initiative</strong><br/>
+              Account Number: <strong>0026686566</strong><br/>
+              Bank: <strong>Stanbic IBTC</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="donate-right fade-up">
+        <p class="ways-label">How You Can Help</p>
+        <div class="ways-grid">
+          <div class="way-tile">
+            <div class="way-tile-icon">💰</div>
+            <h4>Donate Money</h4>
+            <p>Fund food, healthcare, and outreach supplies.</p>
+          </div>
+          <div class="way-tile">
+            <div class="way-tile-icon">🙋</div>
+            <h4>Volunteer</h4>
+            <p>Join our 1,000+ community of change agents.</p>
+          </div>
+          <div class="way-tile">
+            <div class="way-tile-icon">📦</div>
+            <h4>Donate Items</h4>
+            <p>Food, clothing, medicine, books, and essentials.</p>
+          </div>
+          <div class="way-tile">
+            <div class="way-tile-icon">🏢</div>
+            <h4>Sponsor / Partner</h4>
+            <p>Corporate partnerships and sponsorships welcome.</p>
+          </div>
+        </div>
+        <div class="contact-info-block">
+          <p>
+            📞 <strong style="color:rgba(255,255,255,0.8)">+234 708 775 9673</strong><br/>
+            ✉️ <a href="/cdn-cgi/l/email-protection#27425f424452534e5142544e494e534e46534e514267404a464e4b0944484a"><span class="__cf_email__" data-cfemail="f7928f929482839e8192849e999e839e96839e8192b7909a969e9bd994989a">[email&#160;protected]</span></a><br/>
+            🌐 <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a><br/>
+            📍 Lagos, Nigeria
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL SECTION -->
+  <section class="social-section">
+    <p>Follow our journey — every month, a new story of hope and impact.</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/executivesinitiative/" target="_blank" class="social-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://x.com/Executivesinc" target="_blank" class="social-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X (Twitter)
+      </a>
+      <a href="https://www.facebook.com/executivesinitiative/" target="_blank" class="social-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a href="https://ng.linkedin.com/company/executivesinitiative" target="_blank" class="social-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-left">
+      <div class="logo-primary">Executives Helping Initiative</div>
+      <div class="logo-sub">The Charity Series — Est. 2013</div>
+    </div>
+    <nav class="site-footer-links">
+      <a href="https://www.executivesinitiative.com" target="_blank">Website</a>
+      <a href="eotm-charity-series.html">EOTM Page</a>
+      <a href="#donate">Donate</a>
+      <a href="/cdn-cgi/l/email-protection#9efbe6fbfdebeaf7e8fbedf7f0f7eaf7ffeaf7e8fbdef9f3fff7f2b0fdf1f3">Email</a>
+    </nav>
+    <p class="site-footer-copy">© 2025 Executives Helping Initiative. All rights reserved. Lagos, Nigeria.</p>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Pillar accordion
+    function togglePillar(el) {
+      const pillar = el.closest('.pillar');
+      const isOpen = pillar.classList.contains('open');
+      document.querySelectorAll('.pillar').forEach(p => p.classList.remove('open'));
+      if (!isOpen) pillar.classList.add('open');
+    }
+
+    // Scroll reveal
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver((e
