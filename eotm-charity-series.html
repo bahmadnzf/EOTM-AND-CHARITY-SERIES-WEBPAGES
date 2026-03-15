@@ -77,6 +77,16 @@
 }
     .about-img-placeholder { position: relative; z-index: 1; width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-mid), var(--green-bright)); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; gap: 12px; }
     .about-img-placeholder svg { opacity: 0.4; }
+    .slideshow { display: flex; align-items: center; gap: 10px; }
+.slides { overflow: hidden; flex: 1; }
+.slides img {
+  display: none;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.slides img.active { display: block; }
 
     /* WHAT WE DO */
     .what-we-do { background: var(--cream); }
@@ -211,7 +221,17 @@
         <p class="section-body" style="margin-top:16px;font-style:italic;color:var(--green-bright);">These moments reflect who we are: people helping people with purpose, presence, and love.</p>
       </div>
      <div class="about-img-wrap anim">
-  <img src="https://drive.google.com/drive/folders/11-9aFpSs5DefVVUEj7Kv8nUIuMcpa7Tw?usp=drive_link/photo.jpg" alt="Community Outreach Moments" />
+  <div class="slideshow">
+  <button onclick="moveSlide(-1)">&larr;</button>
+  <div class="slides">
+    <img src="photo1.jpg" alt="Outreach 1" />
+    <img src="photo2.jpg" alt="Outreach 2" />
+    <img src="photo3.jpg" alt="Outreach 3" />
+    <img src="photo4.jpg" alt="Outreach 4" />
+    <img src="photo5.jpg" alt="Outreach 5" />
+  </div>
+  <button onclick="moveSlide(1)">&rarr;</button>
+</div>
 </div>
       </div>
     </div>
@@ -403,6 +423,15 @@
       } else {
         init();
       }
+      let current = 0;
+const imgs = document.querySelectorAll('.slides img');
+imgs[0].classList.add('active');
+function moveSlide(dir) {
+  imgs[current].classList.remove('active');
+  current = (current + dir + imgs.length) % imgs.length;
+  imgs[current].classList.add('active');
+}
+
     })();
   </script>
 
