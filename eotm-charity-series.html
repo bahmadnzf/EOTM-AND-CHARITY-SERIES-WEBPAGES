@@ -65,6 +65,16 @@
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
     .about-img-wrap { position: relative; }
     .about-img-wrap::before { content: ''; position: absolute; top: -16px; left: -16px; right: 16px; bottom: 16px; border: 2px solid var(--gold); border-radius: 4px; z-index: 0; }
+    .about-img-wrap img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  box-shadow: 0 24px 64px rgba(10,61,46,0.2);
+}
     .about-img-placeholder { position: relative; z-index: 1; width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-mid), var(--green-bright)); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; gap: 12px; }
     .about-img-placeholder svg { opacity: 0.4; }
 
@@ -175,7 +185,7 @@
     <div class="hero-inner">
       <span class="hero-badge">Monthly Community Initiative</span>
       <h1>End of the Month<br /><em>Outreach</em> &amp; Charity Series</h1>
-      <p class="hero-sub">At Executives Helping Initiative, service is intentional, consistent, and rooted in deep compassion. Every month, we step beyond words — showing up where help is needed most.</p>
+      <p class="hero-sub">At Executives Helping Initiative, service is intentional, consistent, and rooted in deep compassion. Every month, we step beyond words, showing up where help is needed most.</p>
       <div class="hero-btns">
         <a href="#support" class="btn-primary">Support This Cause</a>
         <a href="#about" class="btn-outline">Learn More</a>
@@ -200,11 +210,9 @@
         <p class="section-body" style="margin-top:16px;">The Charity Series is a flagship program within EHI designed to respond to urgent needs and uplift lives with strategic, compassionate action. Through these visits, we step beyond intention — not just with words, but with action.</p>
         <p class="section-body" style="margin-top:16px;font-style:italic;color:var(--green-bright);">These moments reflect who we are: people helping people with purpose, presence, and love.</p>
       </div>
-      <div class="about-img-wrap anim">
-        <div class="about-img-placeholder">
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <p>Community Outreach Moments</p>
-        </div>
+     <div class="about-img-wrap anim">
+  <img src="https://drive.google.com/drive/folders/11-9aFpSs5DefVVUEj7Kv8nUIuMcpa7Tw?usp=drive_link/photo.jpg" alt="Community Outreach Moments" />
+</div>
       </div>
     </div>
   </section>
@@ -214,13 +222,13 @@
       <div class="wwd-header anim">
         <p class="section-label">Our Programs</p>
         <h2 class="section-title">What We Do</h2>
-        <p class="section-body">Five pillars of compassionate action that define every End of the Month Outreach visit — each one addressing a real, immediate need in our communities.</p>
+        <p class="section-body">Five pillars of compassionate action that define every End of the Month Outreach visit ; each one addressing a real, immediate need in our communities.</p>
       </div>
       <div class="cards">
         <div class="card anim">
           <div class="card-icon">&#127968;</div>
           <h3>Orphanage Visitation</h3>
-          <p>We visit orphanages to shower children with love, supplies, and joy — restoring hope and showing every child they are valued and not forgotten.</p>
+          <p>We visit orphanages to shower children with love, supplies, and joy  restoring hope and showing every child they are valued and not forgotten.</p>
         </div>
         <div class="card anim">
           <div class="card-icon">&#129309;</div>
@@ -235,12 +243,12 @@
         <div class="card anim">
           <div class="card-icon">&#128138;</div>
           <h3>Healthcare Support</h3>
-          <p>From medicine donations to medical outreach events, we bring healthcare closer to the people who need it — with dignity and compassion.</p>
+          <p>From medicine donations to medical outreach events, we bring healthcare closer to the people who need it with dignity and compassion.</p>
         </div>
         <div class="card anim">
           <div class="card-icon">&#127857;</div>
           <h3>Food Support</h3>
-          <p>We distribute meals and food packages to families, orphanages, and communities — because no one should go hungry when we can help.</p>
+          <p>We distribute meals and food packages to families, orphanages, and communities because no one should go hungry when we can help.</p>
         </div>
       </div>
     </div>
@@ -251,7 +259,7 @@
       <div class="anim">
         <p class="section-label">Our Impact</p>
         <h2 class="section-title">What We've Achieved</h2>
-        <p class="section-body">Since 2013, EHI has been a consistent force for good — showing up every month, building trust, and creating lasting change in communities across Nigeria and beyond.</p>
+        <p class="section-body">Since 2013, EHI has been a consistent force for good , showing up every month, building trust, and creating lasting change in communities across Nigeria and beyond.</p>
         <div class="impact-list">
           <div class="impact-item"><div class="impact-dot">&#10003;</div><p>Visited over 30 orphanages across Nigeria, providing food, care, and emotional connection.</p></div>
           <div class="impact-item"><div class="impact-dot">&#10003;</div><p>Reached over 20 communities in Lagos with healthcare, food, and welfare services.</p></div>
@@ -268,7 +276,7 @@
         <div class="org-info-box">
           <span class="org-label">Organisation Info</span>
           <p>
-            &#128205; Lagos, Nigeria<br/>
+            &#128205; No.1 Tinubu close, Unilag, Yaba , Lagos, Nigeria<br/>
             &#128222; +234 708 775 9673<br/>
             &#9993;&#65039; executivesinitiative&#64;gmail.com<br/>
             &#127760; <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a>
@@ -285,8 +293,8 @@
     <div class="support-ways">
       <div class="support-way anim"><div class="support-way-icon">&#128176;</div><h4>Donate Money</h4><p>Contribute financially to fund food, healthcare, and supplies for our monthly visits.</p></div>
       <div class="support-way anim"><div class="support-way-icon">&#129129;</div><h4>Volunteer</h4><p>Join our 1,000+ volunteer team. Be present. Be the difference in someone's life.</p></div>
-      <div class="support-way anim"><div class="support-way-icon">&#129309;</div><h4>Partner With Us</h4><p>Organisations and businesses — partner with us for sponsorship and collaboration.</p></div>
-      <div class="support-way anim"><div class="support-way-icon">&#128230;</div><h4>Donate Items</h4><p>Contribute food, clothing, medicine, books, and other essentials for community visits.</p></div>
+      <div class="support-way anim"><div class="support-way-icon">&#129309;</div><h4>Partner With Us</h4><p>Organisations and businesses : partner with us for sponsorship and collaboration.</p></div>
+      <div class="support-way anim"><div class="support-way-icon">&#128230;</div><h4>Donate Items</h4><p>Contribute food, clothing, medicine, books, and other essentials for community visits.You can meet us here No.1 Tinubu close, Unilag, Yaba , Lagos Or reach out to us for pickup </p></div>
     </div>
     <div class="bank-info anim">
       <strong>Monthly EOTM Donations</strong><br/>
@@ -344,7 +352,7 @@
       <a href="#contact">Contact</a>
       <a href="charity-series.html">Charity Series</a>
     </nav>
-    <p class="footer-bottom">&#169; 2025 Executives Helping Initiative. All rights reserved. | Lagos, Nigeria</p>
+    <p class="footer-bottom">&#169; 2026 Executives Helping Initiative. All rights reserved. | Lagos, Nigeria</p>
   </footer>
 
   <script>
