@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EHI Programs | Executives Helping Initiative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep: #0a3d2e;
+      --green-mid: #145c3f;
+      --green-bright: #1e8a57;
+      --gold: #d4a42a;
+      --gold-light: #f0c84e;
+      --cream: #faf6ee;
+      --white: #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--green-deep);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 24px;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--gold-light); letter-spacing: 0.04em;
+      text-align: center; margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 0.8rem; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: center; margin-bottom: 64px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; color: var(--white);
+      text-align: center; line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    h1 em { font-style: italic; color: var(--gold-light); }
+    .subtitle {
+      text-align: center; color: rgba(255,255,255,0.55);
+      font-size: 1rem; max-width: 500px;
+      line-height: 1.7; margin-bottom: 56px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; width: 100%; max-width: 780px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; padding: 36px 32px;
+      text-decoration: none;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--green-bright), var(--gold));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .card:hover { background: rgba(255,255,255,0.07); border-color: rgba(212,164,42,0.3); transform: translateY(-4px); }
+    .card:hover::after { transform: scaleX(1); }
+    .card-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem; color: var(--gold-light);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--white); margin-bottom: 12px; line-height: 1.2;
+    }
+    .card p {
+      font-size: 0.875rem; color: rgba(255,255,255,0.5);
+      line-height: 1.65; margin-bottom: 24px;
+    }
+    .card-arrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--gold-light); letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .footer-note {
+      font-size: 0.78rem; color: rgba(255,255,255,0.2);
+      text-align: center;
+    }
+    .footer-note a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    .footer-note a:hover { color: var(--gold-light); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .logo     { animation: fadeIn 0.7s 0.1s both; }
+    .tagline  { animation: fadeIn 0.7s 0.2s both; }
+    h1        { animation: fadeIn 0.7s 0.3s both; }
+    .subtitle { animation: fadeIn 0.7s 0.4s both; }
+    .cards    { animation: fadeIn 0.7s 0.5s both; }
+  </style>
+</head>
+<body>
 
+  <div class="logo">Executives Helping Initiative</div>
+  <div class="tagline">Community Programs</div>
+
+  <h1>People Helping People<br/>with <em>Purpose</em></h1>
+  <p class="subtitle">Explore EHI's monthly community programs — bringing hope, healthcare, food, and love to underserved communities across Nigeria.</p>
+
+  <div class="cards">
+    <a href="/eotm-charity-series.html" class="card">
+      <p class="card-num">Program 01</p>
+      <h2>End of the Month Outreach</h2>
+      <p>EHI's signature monthly community support initiative — orphanage visits, community engagement, and welfare support every end of month.</p>
+      <span class="card-arrow">Explore EOTM →</span>
+    </a>
+    <a href="/charity-series.html" class="card">
+      <p class="card-num">Program 02</p>
+      <h2>The Charity Series</h2>
+      <p>EHI's flagship program responding to urgent needs with strategic, compassionate action — healthcare, food, and community upliftment.</p>
+      <span class="card-arrow">Explore Charity Series →</span>
+    </a>
+  </div>
+
+  <p class="footer-note">
+    © 2025 Executives Helping Initiative &nbsp;·&nbsp;
+    <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a> &nbsp;·&nbsp;
+    Lagos, Nigeria
+  </p>
+
+</body>
+</html>
