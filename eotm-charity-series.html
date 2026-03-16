@@ -76,7 +76,18 @@
   box-shadow: 0 24px 64px rgba(10,61,46,0.2);
 }
     .about-img-placeholder { position: relative; z-index: 1; width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green-mid), var(--green-bright)); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; gap: 12px; }
-    .about-img-placeholder svg { opacity: 0.4; }
+.about-img-placeholder svg { opacity: 0.4; }
+.slideshow-wrap { position: relative; z-index: 1; width: 100%; aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; box-shadow: 0 24px 64px rgba(10,61,46,0.2); }
+.slideshow-wrap .slides { width: 100%; height: 100%; }
+.slideshow-wrap .slides img { display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+.slideshow-wrap .slides img.active { display: block; }
+.slide-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(10,61,46,0.75); border: none; color: #ffffff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+.slide-btn:hover { background: #0a3d2e; }
+.slide-btn.prev { left: 10px; }
+.slide-btn.next { right: 10px; }
+.slide-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
+.slide-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.45); cursor: pointer; transition: background 0.2s; display: block; }
+.slide-dots span.active { background: #ffffff; }
     .slideshow { display: flex; align-items: center; gap: 10px; }
 .slides { overflow: hidden; flex: 1; }
 .slides img {
@@ -221,17 +232,22 @@
         <p class="section-body" style="margin-top:16px;font-style:italic;color:var(--green-bright);">These moments reflect who we are: people helping people with purpose, presence, and love.</p>
       </div>
      <div class="about-img-wrap anim">
-  <div class="slideshow">
-  <button onclick="moveSlide(-1)">&larr;</button>
-  <div class="slides">
-    <img src="photo1.jpg" alt="Outreach 1" />
-    <img src="photo2.jpg" alt="Outreach 2" />
-    <img src="photo3.jpg" alt="Outreach 3" />
-    <img src="photo4.jpg" alt="Outreach 4" />
-    <img src="photo5.jpg" alt="Outreach 5" />
+  <div class="slideshow-wrap">
+    <div class="slides">
+      <img src="photo1.jpg" alt="Outreach visit 1" class="active" />
+      <img src="photo2.jpg" alt="Outreach visit 2" />
+      <img src="photo3.jpg" alt="Outreach visit 3" />
+      <img src="photo4.jpg" alt="Outreach visit 4" />
+      <img src="photo5.jpg" alt="Outreach visit 5" />
+    </div>
+    <button class="slide-btn prev" onclick="moveSlide(-1)">&#8592;</button>
+    <button class="slide-btn next" onclick="moveSlide(1)">&#8594;</button>
+    <div class="slide-dots">
+      <span class="active" onclick="goToSlide(0)"></span>
+      <span onclick="goToSlide(1)"></span>
+      <span onclick="goToSlide(2)"></span>
+    </div>
   </div>
-  <button onclick="moveSlide(1)">&rarr;</button>
-</div>
 </div>
       </div>
     </div>
@@ -379,6 +395,30 @@
     // Safe pattern: content visible by default.
     // JS adds 'hidden' only AFTER confirming it can also immediately trigger IntersectionObserver.
     // A 1.5s hard fallback removes hidden from everything as a safety net.
+    var current = 0;
+var imgs = [];
+var dots = [];
+function initSlideshow() {
+  imgs = Array.prototype.slice.call(document.querySelectorAll('.slideshow-wrap .slides img'));
+  dots = Array.prototype.slice.call(document.querySelectorAll('.slide-dots span'));
+}
+function moveSlide(dir) {
+  if (!imgs.length) return;
+  imgs[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = (current + dir + imgs.length) % imgs.length;
+  imgs[current].classList.add('active');
+  dots[current].classList.add('active');
+}
+function goToSlide(n) {
+  if (!imgs.length) return;
+  imgs[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = n;
+  imgs[current].classList.add('active');
+  dots[current].classList.add('active');
+}
+document.addEventListener('DOMContentLoaded', initSlideshow);
     (function() {
       var elems = [];
       var fallbackTimer;
