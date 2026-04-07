@@ -217,10 +217,59 @@
       position: relative;
       z-index: 2;
       width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 80px;
     }
 
     .hero-content {
-      max-width: 750px;
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .hero-right {
+      flex: 1.3;
+      min-width: 360px;
+      display: flex;
+      justify-content: flex-end;
+      animation: fadeInUp 1s ease-out 0.5s both;
+    }
+
+    .hero-image-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .hero-image-container::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: 20px;
+      bottom: 20px;
+      background: linear-gradient(135deg, var(--amber) 0%, var(--sage-light) 100%);
+      border-radius: 24px;
+      opacity: 0.2;
+      z-index: 0;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    .hero-image-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        0 10px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.5s ease;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-image-container:hover img {
+      transform: scale(1.02);
     }
 
     .hero-tag {
@@ -1027,6 +1076,24 @@
         min-height: auto;
       }
 
+      .hero-container {
+        flex-direction: column;
+        gap: 50px;
+      }
+
+      .hero-content,
+      .hero-right {
+        min-width: 100%;
+      }
+
+      .hero-right {
+        justify-content: center;
+      }
+
+      .hero-image-container {
+        max-width: 100%;
+      }
+
       .main-layout {
         padding: 80px 6%;
       }
@@ -1095,7 +1162,9 @@
       </nav>
       <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </div>
- <!-- HERO SECTION -->
+  </header>
+
+  <!-- HERO SECTION -->
   <section class="hero-section">
     <div class="hero-arc hero-arc-1"></div>
     <div class="hero-arc hero-arc-2"></div>
@@ -1150,9 +1219,10 @@
           </div>
           <h2>The Next Generation of Change Agents</h2>
         </div>
+        
         <p class="section-intro">
-          Founded in 2013, Executives Helping Initiative is a youth-led movement of
-          fighting poverty through action. At the end of Eevery month, we show up at orphanages, 
+          Founded in 2013, Executives Helping Initiative is a youth-led movement of 
+          fighting poverty through action. Every month, we show up at orphanages, 
           prisons, hospitals, and underserved communities across Lagos—delivering food, 
           medical care, hope, and second chances.
         </p>
@@ -1164,12 +1234,12 @@
         <div class="focus-grid">
           <h4>Our Focus Areas</h4>
           <div class="focus-items">
-            <div class="focus-item">Community development,Welfare & Upliftment</div>
-            <div class="focus-item">Health Care and Support</div>
-            <div class="focus-item">Prison reforms and Inmates Welfare</div>
-            <div class="focus-item">Orphanages Filling Like Homes</div>
+            <div class="focus-item">Prison reform</div>
+            <div class="focus-item">Mental health (ASADS)</div>
+            <div class="focus-item">Cancer & sickle cell support</div>
+            <div class="focus-item">Community development</div>
             <div class="focus-item">Youth leadership</div>
-            <div class="focus-item">Change  Makers & Advocacy</div>
+            <div class="focus-item">Healthcare advocacy</div>
           </div>
         </div>
       </section>
@@ -1197,14 +1267,10 @@
           </div>
           <div class="stat-card">
             <div class="stat-number">20+</div>
-            <div class="stat-label">Communities transformed and developed with aid</div>
+            <div class="stat-label">Communities transformed with aid</div>
           </div>
           <div class="stat-card">
-          <div class="stat-number">1500+</div>
-            <div class="stat-label">Prison Inmates Impacted Positively since 2013</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">700+</div>
+            <div class="stat-number">1000+</div>
             <div class="stat-label">Youth volunteers empowered as leaders</div>
           </div>
         </div>
@@ -1213,7 +1279,7 @@
           <strong>What makes us different?</strong> We're a leadership incubator disguised as a charity. 
           Every volunteer leads projects, builds skills, and becomes a change agent. We've pioneered 
           prison reform initiatives bringing dignity to inmates, launched mental health advocacy 
-          supporting those with Medical Needs, and created sustainable community development programs.
+          supporting those battling depression, and created sustainable community development programs.
         </p>
       </section>
 
@@ -1229,9 +1295,9 @@
         <div class="programs-grid">
           <a href="/eotm-charity-series.html" class="program-card">
             <div class="program-number">Program 01</div>
-            <h3>End of the Month Celebration</h3>
+            <h3>End of the Month Outreach</h3>
             <p class="program-description">
-              EHI's signature monthly community support initiative: orphanage visits, 
+              EHI's signature monthly community support initiative — orphanage visits, 
               community engagement, and welfare support every end of month.
             </p>
             <span class="program-link">Explore EOTM</span>
@@ -1242,7 +1308,7 @@
             <h3>The Charity Series</h3>
             <p class="program-description">
               EHI's flagship program responding to urgent needs with strategic, 
-              compassionate action: healthcare, food, and community upliftment.
+              compassionate action — healthcare, food, and community upliftment.
             </p>
             <span class="program-link">Explore Charity Series</span>
           </a>
@@ -1254,10 +1320,7 @@
         <h2>Join the Movement</h2>
         <p>
           Your support ensures that we continue to bring hope, joy, and meaningful 
-          change to communities who need it most. Every contribution makes a real difference.<br>
-          OUR MISSION: Unleash the potential of Nigerian youth to solve societal challenges, 
-          improve community health, and advance sustainable development—one compassionate act at a time.<br>
-          OUR VALUES & VISSIONS: Love. Integrity. Passion for humanity. Care for volunteers. Excellence.
+          change to communities who need it most. Every contribution makes a real difference.
         </p>
         <div class="cta-actions">
           <a href="https://www.executivesinitiative.com" class="btn btn-primary">Donate Now</a>
@@ -1285,10 +1348,8 @@
           </div>
           
           <p class="founder-bio">
-            Timothy-Asobele Emmanuel Dare—known simply as Dare Asobele. What sparked this journey? 
-            Anger turned into action.
-            Dare founded Executives Helping Initiative in 2013 as a law student at the University of 
-            Lagos after visiting an orphanage and realizing good intentions weren't enough. Inspired 
+            Dare founded EHI in 2013 as a law student at the University of Lagos after 
+            visiting an orphanage and realizing good intentions weren't enough. Inspired 
             by legal giants Chief Gani Fawehinmi and Judge Chukwudifu Oputa, he rallied 
             five friends and turned compassion into a national movement.
           </p>
@@ -1313,7 +1374,7 @@
         <div class="footer-about">
           <h3>Executives Helping Initiative</h3>
           <p>
-            A youth-led movement of 700+ volunteers fighting poverty through strategic 
+            A youth-led movement of 1,000+ volunteers fighting poverty through strategic 
             action, compassionate outreach, and unwavering commitment to communities 
             across Nigeria.
           </p>
