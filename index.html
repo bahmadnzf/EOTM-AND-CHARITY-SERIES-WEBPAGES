@@ -3,39 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EHI Programs | Executives Helping Initiative</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <title>Executives Helping Initiative | People Helping People with Purpose</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --green-deep: #0a3d2e;
-      --green-mid: #145c3f;
-      --green-bright: #1e8a57;
-      --gold: #d4a42a;
-      --gold-light: #f0c84e;
-      --cream: #faf6ee;
-      --white: #ffffff;
+      --forest: #0f2d1c;
+      --forest-mid: #1a4530;
+      --forest-light: #265e42;
+      --sage: #4a8c63;
+      --sage-light: #6eb88a;
+      --amber: #c97b2a;
+      --amber-light: #e89c4a;
+      --warm-white: #fdf8f2;
+      --off-white: #f4ede2;
+      --cream: #ede4d4;
+      --text: #1a2e22;
+      --text-mid: #3d5a45;
+      --text-soft: #6e8f79;
     }
-     /* HEADER - Enhanced */
+    
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    body { 
+      font-family: 'Outfit', sans-serif; 
+      background: var(--warm-white); 
+      color: var(--text); 
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===================================
+       HEADER
+       =================================== */
     header { 
       position: fixed; 
       top: 0; 
       left: 0; 
       right: 0; 
       z-index: 100; 
-      background: rgba(253, 248, 242, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(253, 248, 242, 0.98);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--cream); 
-      padding: 18px 5%; 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between;
       transition: all 0.3s ease;
       box-shadow: 0 2px 20px rgba(0,0,0,0.03);
     }
     
     header.scrolled {
-      padding: 12px 5%;
       box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     
     .logo { 
@@ -51,7 +82,7 @@
     
     .logo-primary { 
       font-family: 'Cormorant Garamond', serif; 
-      font-size: 1.4rem; 
+      font-size: 1.5rem; 
       font-weight: 700; 
       color: var(--forest); 
       line-height: 1.1;
@@ -104,9 +135,10 @@
     .header-btn { 
       background: var(--forest); 
       color: var(--warm-white) !important; 
-      padding: 10px 24px; 
+      padding: 11px 26px; 
       border-radius: 100px;
       box-shadow: 0 4px 12px rgba(15, 45, 28, 0.2);
+      font-weight: 600;
     }
     
     .header-btn::after {
@@ -119,671 +151,1228 @@
       box-shadow: 0 6px 20px rgba(15, 45, 28, 0.3);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--green-deep);
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--forest);
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ===================================
+       HERO SECTION
+       =================================== */
+    .hero-section {
       min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 24px;
+      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 140px 6% 100px;
     }
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--gold-light); letter-spacing: 0.04em;
-      text-align: center; margin-bottom: 8px;
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,123,42,0.15) 0%, transparent 55%),
+        linear-gradient(to bottom, transparent 25%, rgba(15,45,28,0.7) 65%, var(--forest) 100%);
+      pointer-events: none;
     }
-    .tagline {
-      font-size: 0.8rem; color: rgba(255,255,255,0.4);
-      letter-spacing: 0.1em; text-transform: uppercase;
-      text-align: center; margin-bottom: 64px;
+
+    .hero-arc {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      animation: float 20s infinite ease-in-out;
     }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900; color: var(--white);
-      text-align: center; line-height: 1.15;
-      margin-bottom: 16px;
+
+    .hero-arc-1 {
+      width: 700px;
+      height: 700px;
+      top: -250px;
+      right: -180px;
     }
-    h1 em { font-style: italic; color: var(--gold-light); }
-    .subtitle {
-      text-align: center; color: rgba(255,255,255,0.55);
-      font-size: 1rem; max-width: 500px;
-      line-height: 1.7; margin-bottom: 56px;
+
+    .hero-arc-2 {
+      width: 400px;
+      height: 400px;
+      bottom: 80px;
+      left: -120px;
+      animation-delay: -10s;
     }
-    .cards {
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(20px, -20px) scale(1.05); }
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      background: rgba(201, 123, 42, 0.12);
+      padding: 10px 24px;
+      border-radius: 100px;
+      border: 1px solid rgba(201, 123, 42, 0.25);
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber-light);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    .hero-tag span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+    }
+
+    .hero-content h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--warm-white);
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--amber-light);
+      display: block;
+      margin-top: 8px;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 44px;
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--warm-white);
+      box-shadow: 0 4px 20px rgba(201, 123, 42, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--amber-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(201, 123, 42, 0.4);
+    }
+
+    .btn-secondary {
+      border: 2px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.6);
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===================================
+       MAIN CONTENT LAYOUT
+       =================================== */
+    .main-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px; width: 100%; max-width: 780px;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 100px 6%;
+      position: relative;
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    /* ===================================
+       WHAT WE DO SECTION
+       =================================== */
+    .section {
+      margin-bottom: 100px;
+    }
+
+    .section-header {
       margin-bottom: 48px;
     }
-    .card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 6px; padding: 36px 32px;
-      text-decoration: none;
-      transition: all 0.3s; position: relative; overflow: hidden;
-    }
-    .card::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--green-bright), var(--gold));
-      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
-    }
-    .card:hover { background: rgba(255,255,255,0.07); border-color: rgba(212,164,42,0.3); transform: translateY(-4px); }
-    .card:hover::after { transform: scaleX(1); }
-    .card-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.75rem; color: var(--gold-light);
-      letter-spacing: 0.12em; text-transform: uppercase;
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sage);
       margin-bottom: 16px;
     }
-    .card h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; font-weight: 700;
-      color: var(--white); margin-bottom: 12px; line-height: 1.2;
+
+    .section-label::before {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sage), transparent);
     }
-    .card p {
-      font-size: 0.875rem; color: rgba(255,255,255,0.5);
-      line-height: 1.65; margin-bottom: 24px;
+
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
     }
-    .card-arrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--gold-light); letter-spacing: 0.05em;
+
+    .section-intro {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text-mid);
+      margin-bottom: 32px;
+    }
+
+    .impact-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--forest);
+      margin: 40px 0;
+      padding: 32px 40px;
+      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream) 100%);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .impact-quote::before {
+      content: '"';
+      font-size: 4rem;
+      font-family: Georgia, serif;
+      color: var(--amber);
+      opacity: 0.2;
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      line-height: 1;
+    }
+
+    .focus-grid {
+      background: var(--forest);
+      padding: 44px 48px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(15, 45, 28, 0.15);
+      position: relative;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+
+    .focus-grid::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
+    }
+
+    .focus-grid h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 28px;
+    }
+
+    .focus-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .focus-item {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--warm-white);
+      padding: 14px 20px 14px 44px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .focus-item::before {
+      content: '✓';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      color: var(--amber-light);
+      font-weight: 700;
+    }
+
+    .focus-item:hover {
+      background: rgba(201, 123, 42, 0.12);
+      border-color: rgba(201, 123, 42, 0.35);
+      transform: translateX(5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ===================================
+       OUR IMPACT SECTION
+       =================================== */
+    .impact-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .stat-card {
+      background: var(--off-white);
+      padding: 32px 28px;
+      border-radius: 12px;
+      border: 2px solid var(--cream);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: var(--sage-light);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+
+    .recognition-badge {
+      background: linear-gradient(135deg, var(--amber) 0%, #d68b3a 100%);
+      color: var(--warm-white);
+      padding: 28px 32px;
+      border-radius: 12px;
+      margin: 40px 0;
+      box-shadow: 0 8px 25px rgba(201, 123, 42, 0.25);
+    }
+
+    .recognition-badge p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .recognition-badge strong {
+      font-weight: 700;
+    }
+
+    /* ===================================
+       PROGRAMS SECTION
+       =================================== */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .program-card {
+      background: var(--warm-white);
+      border: 2px solid var(--cream);
+      border-radius: 16px;
+      padding: 40px 36px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sage), var(--amber));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .program-card:hover {
+      border-color: var(--sage-light);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+
+    .program-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .program-number {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+    }
+
+    .program-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .program-description {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+    }
+
+    .program-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .footer-note {
-      font-size: 0.78rem; color: rgba(255,255,255,0.2);
-      text-align: center;
+
+    .program-link::after {
+      content: '→';
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
     }
-    .footer-note a { color: rgba(255,255,255,0.35); text-decoration: none; }
-    .footer-note a:hover { color: var(--gold-light); }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: none; }
+
+    .program-card:hover .program-link::after {
+      transform: translateX(4px);
     }
-    .logo     { animation: fadeIn 0.7s 0.1s both; }
-    .tagline  { animation: fadeIn 0.7s 0.2s both; }
-    h1        { animation: fadeIn 0.7s 0.3s both; }
-    .subtitle { animation: fadeIn 0.7s 0.4s both; }
-    .cards    { animation: fadeIn 0.7s 0.5s both; }
+
     /* ===================================
-   WHAT WE DO SECTION
-   =================================== */
+       CTA SECTION
+       =================================== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
+      padding: 80px 48px;
+      border-radius: 20px;
+      text-align: center;
+      margin: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
 
-.what-we-do-section {
-  padding: 110px 6%;
-  background: var(--warm-white);
-  position: relative;
-}
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
+    }
 
-.what-we-do-section .container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--warm-white);
+      margin-bottom: 20px;
+    }
 
-/* Section Header */
-.what-we-do-section .section-header {
-  text-align: center;
-  margin-bottom: 56px;
-  animation: fadeInUp 0.8s ease-out;
-}
+    .cta-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
 
-.what-we-do-section .section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--sage);
-  margin-bottom: 16px;
-  position: relative;
-}
+    .cta-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-.what-we-do-section .section-label::before,
-.what-we-do-section .section-label::after {
-  content: '';
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--sage), transparent);
-}
+    /* ===================================
+       SIDEBAR
+       =================================== */
+    .sidebar {
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+    }
 
-.what-we-do-section .section-header h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 700;
-  line-height: 1.15;
-  color: var(--forest);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
+    .founder-card {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(15, 45, 28, 0.25);
+      position: relative;
+    }
 
-/* Section Content */
-.what-we-do-section .section-content {
-  max-width: 900px;
-  margin: 0 auto;
-}
+    .founder-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
+    }
 
-.what-we-do-section .intro-text {
-  font-size: 1.1rem;
-  line-height: 1.85;
-  color: var(--text-mid);
-  margin-bottom: 32px;
-  text-align: center;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
-}
+    .founder-header {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-/* Impact Statement - Highlighted Quote */
-.what-we-do-section .impact-statement {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-style: italic;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--forest);
-  text-align: center;
-  margin: 48px auto;
-  padding: 32px 40px;
-  background: linear-gradient(135deg, var(--off-white) 0%, var(--cream) 100%);
-  border-left: 4px solid var(--amber);
-  border-radius: 0 12px 12px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  position: relative;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
-}
+    .founder-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+    }
 
-.what-we-do-section .impact-statement::before {
-  content: '"';
-  font-size: 4rem;
-  font-family: Georgia, serif;
-  color: var(--amber);
-  opacity: 0.2;
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  line-height: 1;
-}
+    .founder-content {
+      padding: 32px 28px;
+    }
 
-/* Focus Areas */
-.what-we-do-section .focus-areas {
-  background: var(--forest);
-  padding: 40px 48px;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(15, 45, 28, 0.15);
-  animation: fadeInUp 0.8s ease-out 0.6s both;
-  position: relative;
-  overflow: hidden;
-}
+    .founder-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--warm-white);
+      margin: 0 0 10px 0;
+      line-height: 1.2;
+    }
 
-.what-we-do-section .focus-areas::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
-}
+    .founder-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--sage-light);
+      margin: 0 0 24px 0;
+      letter-spacing: 0.03em;
+    }
 
-.what-we-do-section .focus-areas h4 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amber-light);
-  margin-bottom: 24px;
-  margin-top: 0;
-}
+    .founder-credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.what-we-do-section .focus-areas ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
+    .credential-tag {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      width: fit-content;
+    }
 
-.what-we-do-section .focus-areas li {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--warm-white);
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  position: relative;
-  padding-left: 40px;
-}
+    .founder-bio {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 24px;
+    }
 
-.what-we-do-section .focus-areas li::before {
-  content: '✓';
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
-  color: var(--amber-light);
-  font-weight: 700;
-}
+    .founder-achievements {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
 
-.what-we-do-section .focus-areas li:hover {
-  background: rgba(201, 123, 42, 0.12);
-  border-color: rgba(201, 123, 42, 0.35);
-  transform: translateX(4px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+    .founder-achievements p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+      line-height: 1.6;
+    }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .founder-achievements p:first-child {
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .what-we-do-section {
-    padding: 80px 6%;
-  }
+    .founder-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--amber-light);
+      margin: 0;
+      padding: 20px 24px;
+      background: rgba(201, 123, 42, 0.1);
+      border-left: 3px solid var(--amber);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
 
-  .what-we-do-section .section-header {
-    margin-bottom: 40px;
-  }
+    .founder-quote::before {
+      content: '"';
+      font-size: 3rem;
+      font-family: Georgia, serif;
+      color: var(--amber);
+      opacity: 0.3;
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      line-height: 1;
+    }
 
-  .what-we-do-section .section-label::before,
-  .what-we-do-section .section-label::after {
-    width: 24px;
-  }
+    /* ===================================
+       FOOTER
+       =================================== */
+    footer {
+      background: var(--forest);
+      padding: 60px 6% 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
 
-  .what-we-do-section .intro-text {
-    font-size: 1rem;
-    text-align: left;
-  }
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-  .what-we-do-section .impact-statement {
-    font-size: 1.3rem;
-    padding: 24px 28px;
-    margin: 36px auto;
-    text-align: left;
-  }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
 
-  .what-we-do-section .focus-areas {
-    padding: 32px 24px;
-  }
+    .footer-about h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--warm-white);
+      margin-bottom: 16px;
+    }
 
-  .what-we-do-section .focus-areas ul {
-    grid-template-columns: 1fr;
-  }
-}
+    .footer-about p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 24px;
+    }
 
-@media (max-width: 540px) {
-  .what-we-do-section .impact-statement::before {
-    font-size: 3rem;
-    top: -5px;
-    left: 10px;
-  }
+    .footer-section h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 20px;
+    }
 
-  .what-we-do-section .focus-areas li {
-    font-size: 0.9rem;
-    padding: 12px 16px 12px 36px;
-  }
-/* ===================================
-   FOUNDER FOOTER SECTION
-   =================================== */
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-.founder-footer {
-  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
-  padding: 80px 6% 90px;
-  position: relative;
-  overflow: hidden;
-}
+    .footer-links a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-.founder-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
-}
+    .footer-links a::before {
+      content: '→';
+      opacity: 0;
+      transform: translateX(-5px);
+      transition: all 0.2s;
+    }
 
-/* Decorative circles */
-.founder-footer::after {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  bottom: -200px;
-  right: -150px;
-  pointer-events: none;
-}
+    .footer-links a:hover {
+      color: var(--amber-light);
+      transform: translateX(5px);
+    }
 
-.founder-footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-}
+    .footer-links a:hover::before {
+      opacity: 1;
+      transform: translateX(0);
+    }
 
-.founder-footer-label {
-  text-align: center;
-  margin-bottom: 48px;
-}
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
-.founder-footer-label span {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--amber-light);
-  position: relative;
-}
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
 
-.founder-footer-label span::before,
-.founder-footer-label span::after {
-  content: '';
-  width: 50px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--amber-light), transparent);
-}
+    .contact-item a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
 
-.founder-footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 80px;
-  align-items: start;
-}
+    .contact-item a:hover {
+      color: var(--amber-light);
+    }
 
-/* Left Column - Founder Info */
-.founder-info h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  color: var(--warm-white);
-  margin: 0 0 12px 0;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
 
-.founder-subtitle {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--sage-light);
-  margin: 0 0 32px 0;
-  letter-spacing: 0.03em;
-}
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
 
-.founder-tags {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+    .social-link:hover {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: var(--warm-white);
+      transform: translateY(-3px);
+    }
 
-.founder-tags .tag {
-  display: inline-block;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
-  padding: 10px 20px;
-  border-radius: 8px;
-  width: fit-content;
-  transition: all 0.3s ease;
-}
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+    }
 
-.founder-tags .tag:hover {
-  background: rgba(201, 123, 42, 0.15);
-  border-color: var(--amber-light);
-  transform: translateX(5px);
-}
+    /* ===================================
+       RESPONSIVE DESIGN
+       =================================== */
+    @media (max-width: 1200px) {
+      .main-layout {
+        grid-template-columns: 1fr 340px;
+        gap: 50px;
+      }
+    }
 
-/* Right Column - Story */
-.founder-story {
-  padding-top: 8px;
-}
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
 
-.story-text {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 28px;
-}
+      .sidebar {
+        position: static;
+        max-width: 600px;
+        margin: 0 auto;
+      }
 
-.founder-credentials-footer {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  padding: 20px 24px;
-  margin-bottom: 28px;
-}
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
 
-.founder-credentials-footer p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-  line-height: 1.7;
-}
+    @media (max-width: 768px) {
+      .header-nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--warm-white);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 100px 32px 32px;
+        gap: 24px;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        transition: left 0.3s ease;
+        z-index: 99;
+      }
 
-.founder-credentials-footer p:first-child {
-  margin-bottom: 8px;
-}
+      .header-nav.active {
+        left: 0;
+      }
 
-.founder-credentials-footer strong {
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 600;
-}
+      .mobile-menu-btn {
+        display: block;
+      }
 
-.founder-quote-footer {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-style: italic;
-  font-weight: 500;
-  color: var(--warm-white);
-  margin: 0;
-  padding: 28px 32px;
-  background: rgba(201, 123, 42, 0.12);
-  border-left: 4px solid var(--amber);
-  border-radius: 0 12px 12px 0;
-  position: relative;
-}
+      .hero-section {
+        padding: 120px 6% 80px;
+        min-height: auto;
+      }
 
-.founder-quote-footer::before {
-  content: '"';
-  font-size: 4.5rem;
-  font-family: Georgia, serif;
-  color: var(--amber);
-  opacity: 0.25;
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  line-height: 1;
-}
+      .main-layout {
+        padding: 80px 6%;
+      }
 
-/* Responsive for Footer */
-@media (max-width: 1024px) {
-  .founder-footer-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-  
-  .founder-info {
-    text-align: center;
-  }
-  
-  .founder-tags {
-    align-items: center;
-  }
-}
+      .section {
+        margin-bottom: 80px;
+      }
 
-@media (max-width: 768px) {
-  .founder-footer {
-    padding: 60px 6% 70px;
-  }
-  
-  .founder-footer-label {
-    margin-bottom: 36px;
-  }
-  
-  .founder-info h2 {
-    font-size: 2.2rem;
-  }
-  
-  .story-text {
-    font-size: 1rem;
-  }
-  
-  .founder-quote-footer {
-    font-size: 1.2rem;
-    padding: 20px 24px;
-  }
-  
-  .founder-quote-footer::before {
-    font-size: 3.5rem;
-  }
-}
+      .programs-grid,
+      .impact-stats {
+        grid-template-columns: 1fr;
+      }
 
-@media (max-width: 540px) {
-  .founder-tags .tag {
-    width: 100%;
-    text-align: center;
-  }
-}
-}
+      .cta-section {
+        padding: 60px 32px;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .impact-quote {
+        font-size: 1.3rem;
+        padding: 24px 28px;
+      }
+
+      .focus-grid {
+        padding: 32px 24px;
+      }
+
+      .focus-items {
+        grid-template-columns: 1fr;
+      }
+
+      .program-card {
+        padding: 32px 28px;
+      }
+    }
   </style>
 </head>
-  header>
-    <a href="https://www.executivesinitiative.com" class="logo">
-      <span class="logo-primary">Executives Helping Initiative</span>
-      <span class="logo-sub">The Charity Series</span>
-    </a>
-    <nav class="header-nav">
-      <a href="#flagship">About</a>
-      <a href="/charity-series.html">Charity Series Page</a>
-      <a href="eotm-charity-series.html">EOTM Page</a>
-      <a href="https://www.executivesinitiative.com" target="_blank" class="header-btn">Visit EHI</a>
-    </nav>
-  </header>
 <body>
 
-  <div class="logo">Executives Helping Initiative</div>
-  <div class="tagline">Community Programs</div>
-
-  <h1>People Helping People<br/>with <em>Purpose</em></h1>
-  <p class="subtitle">Explore EHI's monthly community programs: bringing hope, healthcare, food, and love to underserved communities across Nigeria.</p>
-
-  <div class="cards">
-      <a href="/eotm-charity-series.html" class="card">
-      <p class="card-num">Program 01</p>
-      <h2>End of the Month Outreach</h2>
-      <p>EHI's signature monthly community support initiative — orphanage visits, community engagement, and welfare support every end of month.</p>
-      <span class="card-arrow">Explore EOTM →</span>
-    </a>
-    <a href="/charity-series.html" class="card">
-      <p class="card-num">Program 02</p>
-      <h2>The Charity Series</h2>
-      <p>EHI's flagship program responding to urgent needs with strategic, compassionate action — healthcare, food, and community upliftment.</p>
-      <span class="card-arrow">Explore Charity Series →</span>
-    </a>
-    <section class="what-we-do-section" id="what-we-do">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-label">WHAT WE DO</p>
-      <h2>The Next Generation of Change Agents</h2>
-    </div>    
-<div class="section-content">
-      <p class="intro-text">Founded in 2013, Executives Helping Initiative is a youth-led movement of 700+ volunteers fighting poverty through action.</P>
-      <p class="impact-statement">We don't just raise awareness. We implement solutions.</p>
-      <div class="focus-areas">
-      <P>we show up at orphanages, prisons, hospitals, and underserved communities across Lagos—delivering food, medical care, hope, and second chances.</P>
-      </div>
+  <!-- HEADER -->
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo">
+        <span class="logo-primary">Executives Helping Initiative</span>
+        <span class="logo-sub">People Helping People with Purpose</span>
+      </a>
+      <nav class="header-nav">
+        <a href="#about">About</a>
+        <a href="#programs">Programs</a>
+        <a href="#impact">Impact</a>
+        <a href="#founder">Founder</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.executivesinitiative.com" target="_blank" class="header-btn">Visit Main Site</a>
+      </nav>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </div>
-  </div>
-</section>
-    <a href="/eotm-charity-series.html" class="card">
-      <h3 class="card-num">OUR IMPACT</h3>
-      <p>In August 2018, EHI was recognized by SME 100 Nigeria for its invaluable contributions to active citizenry and engagement in Nigeria.</p>
-    <ul>
-      <li>→ 30+ orphanages visited monthly since 2013</li>
-      <li>→ 20+ communities transformed with food, clothing & medical aid</li>
-      <li>→ 700+ youth volunteers empowered as leaders</li>
-      <li>→ Prison reform initiatives bringing dignity to inmates</li>
-      <li>→ Mental health advocacy supporting those battling depression</li>
-    </ul>
-    <p>What makes us different?<br> We're a leadership incubator disguised as a charity. Every volunteer leads projects, builds skills, and becomes a change agent.</p>
-    </a>
-    <div class="cards">
-  </div>
-<!-- Add before closing </body> tag, after your main footer -->
-<section class="founder-footer">
-  <!-- Founder footer HTML <section class="founder-footer">
-  <div class="founder-footer-container">
-    <div class="founder-footer-label">
-      <span>MEET OUR FOUNDER</span>
-    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-arc hero-arc-1"></div>
+    <div class="hero-arc hero-arc-2"></div>
     
-    <div class="founder-footer-grid">
-      <!-- Left Column -->
-      <div class="founder-info">
-        <h2>Dare Asobele</h2>
-        <p class="founder-subtitle">Founder & Visionary</p>
-        
-        <div class="founder-tags">
-          <span class="tag">Lawyer</span>
-          <span class="tag">Project Manager</span>
-          <span class="tag">Change Catalyst</span>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <div class="hero-tag-dot"></div>
+          <span>Est. December 2013 — 1000+ Volunteers Strong</span>
         </div>
-      </div>
-      <div class="founder-story">
-        <p class="story-text">
-          Timothy-Asobele Emmanuel Dare, known simply as Dare Asobele. Dare founded EHI in 2013 as a law student at the University of Lagos after visiting an orphanage and realizing good intentions weren't enough. Inspired by legal giants Chief Gani Fawehinmi and Judge Chukwudifu Oputa, he rallied five friends and turned compassion into a national movement.
+        
+        <h1>
+          People Helping<br />
+          People with<br />
+          <em>Purpose</em>
+        </h1>
+        
+        <p class="hero-description">
+          A youth-led movement transforming lives across Nigeria through strategic action, 
+          compassionate outreach, and unwavering commitment to communities that need it most.
         </p>
-        <p>  What sparked this journey? Anger turned into action.</p>
-        <div class="founder-credentials-footer">
-          <p><strong>Called to the Nigerian Bar (2015)</strong> | PMP® Certified</p>
-          <p>Also founded <strong>ASADS</strong> (Anti-Suicide and Depression Squad)</p>
-        </div>
         
-        <blockquote class="founder-quote-footer">
-          "The world just needs people willing to take action."
-        </blockquote>
+        <div class="hero-actions">
+          <a href="#programs" class="btn btn-primary">Explore Our Programs</a>
+          <a href="#contact" class="btn btn-secondary">Get Involved</a>
+        </div>
       </div>
     </div>
+  </section>
+
+  <!-- MAIN CONTENT WITH SIDEBAR -->
+  <div class="main-layout">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      
+      <!-- WHAT WE DO SECTION -->
+      <section class="section" id="about">
+        <div class="section-header">
+          <div class="section-label">
+            <span>WHAT WE DO</span>
+          </div>
+          <h2>The Next Generation of Change Agents</h2>
+        </div>
+        
+        <p class="section-intro">
+          Founded in 2013, Executives Helping Initiative is a youth-led movement of 1,000+ 
+          volunteers fighting poverty through action. Every month, we show up at orphanages, 
+          prisons, hospitals, and underserved communities across Lagos—delivering food, 
+          medical care, hope, and second chances.
+        </p>
+        
+        <div class="impact-quote">
+          We don't just raise awareness. We implement solutions.
+        </div>
+        
+        <div class="focus-grid">
+          <h4>Our Focus Areas</h4>
+          <div class="focus-items">
+            <div class="focus-item">Prison reform</div>
+            <div class="focus-item">Mental health (ASADS)</div>
+            <div class="focus-item">Cancer & sickle cell support</div>
+            <div class="focus-item">Community development</div>
+            <div class="focus-item">Youth leadership</div>
+            <div class="focus-item">Healthcare advocacy</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUR IMPACT SECTION -->
+      <section class="section" id="impact">
+        <div class="section-header">
+          <div class="section-label">
+            <span>OUR IMPACT</span>
+          </div>
+          <h2>Measurable Change, Real Lives</h2>
+        </div>
+        
+        <div class="recognition-badge">
+          <p>
+            <strong>Recognized by SME 100 Nigeria (2018)</strong> for invaluable contributions 
+            to active citizenry and engagement in Nigeria.
+          </p>
+        </div>
+        
+        <div class="impact-stats">
+          <div class="stat-card">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Orphanages visited monthly since 2013</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Communities transformed with aid</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Youth volunteers empowered as leaders</div>
+          </div>
+        </div>
+        
+        <p class="section-intro">
+          <strong>What makes us different?</strong> We're a leadership incubator disguised as a charity. 
+          Every volunteer leads projects, builds skills, and becomes a change agent. We've pioneered 
+          prison reform initiatives bringing dignity to inmates, launched mental health advocacy 
+          supporting those battling depression, and created sustainable community development programs.
+        </p>
+      </section>
+
+      <!-- PROGRAMS SECTION -->
+      <section class="section" id="programs">
+        <div class="section-header">
+          <div class="section-label">
+            <span>OUR PROGRAMS</span>
+          </div>
+          <h2>Making Impact Every Month</h2>
+        </div>
+        
+        <div class="programs-grid">
+          <a href="/eotm-charity-series.html" class="program-card">
+            <div class="program-number">Program 01</div>
+            <h3>End of the Month Outreach</h3>
+            <p class="program-description">
+              EHI's signature monthly community support initiative — orphanage visits, 
+              community engagement, and welfare support every end of month.
+            </p>
+            <span class="program-link">Explore EOTM</span>
+          </a>
+          
+          <a href="/charity-series.html" class="program-card">
+            <div class="program-number">Program 02</div>
+            <h3>The Charity Series</h3>
+            <p class="program-description">
+              EHI's flagship program responding to urgent needs with strategic, 
+              compassionate action — healthcare, food, and community upliftment.
+            </p>
+            <span class="program-link">Explore Charity Series</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="cta-section" id="contact">
+        <h2>Join the Movement</h2>
+        <p>
+          Your support ensures that we continue to bring hope, joy, and meaningful 
+          change to communities who need it most. Every contribution makes a real difference.
+        </p>
+        <div class="cta-actions">
+          <a href="https://www.executivesinitiative.com" class="btn btn-primary">Donate Now</a>
+          <a href="mailto:executivesinitiative@gmail.com" class="btn btn-secondary">Become a Volunteer</a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="founder">
+      <div class="founder-card">
+        <div class="founder-header">
+          <span class="founder-label">MEET OUR FOUNDER</span>
+        </div>
+        
+        <div class="founder-content">
+          <h3>Dare Asobele</h3>
+          <p class="founder-title">Founder & Visionary</p>
+          
+          <div class="founder-credentials">
+            <span class="credential-tag">Lawyer</span>
+            <span class="credential-tag">Project Manager</span>
+            <span class="credential-tag">Change Catalyst</span>
+          </div>
+          
+          <p class="founder-bio">
+            Dare founded EHI in 2013 as a law student at the University of Lagos after 
+            visiting an orphanage and realizing good intentions weren't enough. Inspired 
+            by legal giants Chief Gani Fawehinmi and Judge Chukwudifu Oputa, he rallied 
+            five friends and turned compassion into a national movement.
+          </p>
+          
+          <div class="founder-achievements">
+            <p><strong>Called to the Nigerian Bar (2015)</strong> | PMP® Certified</p>
+            <p>Also founded <strong>ASADS</strong> (Anti-Suicide and Depression Squad)</p>
+          </div>
+          
+          <blockquote class="founder-quote">
+            The world just needs people willing to take action.
+          </blockquote>
+        </div>
+      </div>
+    </aside>
   </div>
-</section>
-</section>
-<footer class="site-footer">
-  < <p class="footer-note">
-    © 2026 Executives Helping Initiative &nbsp;·&nbsp;
-    <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a> &nbsp;·&nbsp;
-    Lagos, Nigeria
-  </p>
-</footer>
-  </div>
-</body>
-</html>
- 
-<script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h3>Executives Helping Initiative</h3>
+          <p>
+            A youth-led movement of 1,000+ volunteers fighting poverty through strategic 
+            action, compassionate outreach, and unwavering commitment to communities 
+            across Nigeria.
+          </p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="https://x.com/Executivesinc" target="_blank" class="social-link" aria-label="Twitter/X">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="https://ng.linkedin.com/company/executivesinitiative" target="_blank" class="social-link" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="#about">About Us</a>
+            <a href="#programs">Our Programs</a>
+            <a href="#impact">Our Impact</a>
+            <a href="/eotm-charity-series.html">EOTM Outreach</a>
+            <a href="/charity-series.html">Charity Series</a>
+            <a href="https://www.executivesinitiative.com" target="_blank">Main Website</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Contact Us</h4>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span>📞</span>
+              <a href="tel:+2347087759673">+234 708 775 9673</a>
+            </div>
+            <div class="contact-item">
+              <span>✉️</span>
+              <a href="mailto:executivesinitiative@gmail.com">executivesinitiative@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <span>🌐</span>
+              <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a>
+            </div>
+            <div class="contact-item">
+              <span>📍</span>
+              <span>Lagos, Nigeria</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2026 Executives Helping Initiative. All rights reserved. CAC/IT/NO 108431</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
     // Header scroll effect
     window.addEventListener('scroll', function() {
-      var header = document.querySelector('header');
+      const header = document.querySelector('header');
       if (window.scrollY > 50) {
         header.classList.add('scrolled');
       } else {
@@ -791,64 +1380,42 @@
       }
     });
 
-    // Pillar accordion
-    (function() {
-      var tops = document.querySelectorAll('.pillar-top');
-      tops.forEach(function(top) {
-        top.addEventListener('click', function() {
-          var pillar = this.closest('.pillar');
-          var isOpen = pillar.classList.contains('open');
-          document.querySelectorAll('.pillar').forEach(function(p) { 
-            p.classList.remove('open'); 
-          });
-          if (!isOpen) pillar.classList.add('open');
-        });
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.querySelector('.header-nav');
+      nav.classList.toggle('active');
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            // Close mobile menu if open
+            document.querySelector('.header-nav').classList.remove('active');
+          }
+        }
       });
-    })();
+    });
 
-    // Safe scroll animations
-    (function() {
-      var elems = [];
-      var fallbackTimer;
-
-      function showAll() {
-        clearTimeout(fallbackTimer);
-        for (var i = 0; i < elems.length; i++) {
-          elems[i].classList.remove('hidden');
-        }
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('.header-nav');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !menuBtn.contains(event.target)) {
+        nav.classList.remove('active');
       }
-
-      function init() {
-        if (!('IntersectionObserver' in window)) return;
-
-        elems = Array.prototype.slice.call(document.querySelectorAll('.anim'));
-        if (!elems.length) return;
-
-        for (var i = 0; i < elems.length; i++) {
-          elems[i].classList.add('hidden');
-        }
-
-        fallbackTimer = setTimeout(showAll, 1500);
-
-        var observer = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.remove('hidden');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
-
-        for (var i = 0; i < elems.length; i++) {
-          observer.observe(elems[i]);
-        }
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    })();
+    });
   </script>
 
+</body>
+</html>
