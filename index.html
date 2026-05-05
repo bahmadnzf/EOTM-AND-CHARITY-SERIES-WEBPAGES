@@ -785,8 +785,81 @@
       color: var(--amber-light);
     }
 
+    /* ===================================
+       FOUNDER PHOTO — NEW
+       =================================== */
+    .founder-photo-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 28px 28px 0;
+    }
+
+    .founder-photo-ring {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      flex-shrink: 0;
+    }
+
+    /* Animated amber ring */
+    .founder-photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--amber) 0deg,
+        var(--sage-light) 120deg,
+        var(--amber-light) 240deg,
+        var(--amber) 360deg
+      );
+      animation: spin-ring 8s linear infinite;
+      z-index: 0;
+    }
+
+    /* White gap between ring and photo */
+    .founder-photo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      background: var(--forest);
+      z-index: 1;
+    }
+
+    @keyframes spin-ring {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .founder-photo-ring img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    /* Subtle amber glow beneath the photo */
+    .founder-photo-glow {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 16px;
+      background: var(--amber);
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.35;
+      z-index: 1;
+    }
+
     .founder-content {
-      padding: 32px 28px;
+      padding: 20px 28px 32px;
     }
 
     .founder-content h3 {
@@ -796,6 +869,7 @@
       color: var(--warm-white);
       margin: 0 0 10px 0;
       line-height: 1.2;
+      text-align: center;
     }
 
     .founder-title {
@@ -804,6 +878,7 @@
       color: var(--sage-light);
       margin: 0 0 24px 0;
       letter-spacing: 0.03em;
+      text-align: center;
     }
 
     .founder-credentials {
@@ -1019,6 +1094,270 @@
     }
 
     /* ===================================
+       SIDEBAR GALLERY
+       =================================== */
+    .gallery-card {
+      margin-top: 24px;
+      background: var(--off-white);
+      border: 2px solid var(--cream);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(15, 45, 28, 0.08);
+    }
+
+    .gallery-card-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gallery-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    .gallery-count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      background: var(--cream);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 16px;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--cream);
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--amber);
+      transform: scale(1.03);
+      z-index: 2;
+      box-shadow: 0 6px 20px rgba(201, 123, 42, 0.25);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    /* Hover overlay on each thumb */
+    .gallery-item::after {
+      content: '🔍';
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 45, 28, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      border-radius: 6px;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    /* Empty placeholder slot */
+    .gallery-item.gallery-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed var(--cream);
+      cursor: default;
+    }
+
+    .gallery-item.gallery-empty:hover {
+      border-color: var(--sage-light);
+      transform: none;
+      box-shadow: none;
+    }
+
+    .gallery-item.gallery-empty::after {
+      display: none;
+    }
+
+    .gallery-empty-icon {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+      opacity: 0.4;
+    }
+
+    .gallery-empty-text {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      opacity: 0.6;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* "View all" strip at the bottom */
+    .gallery-footer {
+      padding: 0 16px 16px;
+    }
+
+    .gallery-hint {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      text-align: center;
+      padding: 10px;
+      background: var(--cream);
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+
+    .gallery-hint code {
+      font-size: 0.72rem;
+      background: rgba(15, 45, 28, 0.08);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--forest);
+      font-family: monospace;
+    }
+
+    /* ===================================
+       LIGHTBOX
+       =================================== */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10, 24, 15, 0.92);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .lightbox-overlay.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 860px;
+      width: 100%;
+      animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox-inner img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      display: block;
+    }
+
+    .lightbox-caption {
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      margin-top: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .lightbox-close:hover {
+      background: var(--amber);
+      border-color: var(--amber);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--amber);
+      border-color: var(--amber);
+    }
+
+    .lightbox-prev { left: -60px; }
+    .lightbox-next { right: -60px; }
+
+    @media (max-width: 640px) {
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-close { top: -48px; }
+    }
+
+    /* ===================================
        RESPONSIVE DESIGN
        =================================== */
     @media (max-width: 1200px) {
@@ -1170,7 +1509,6 @@
     <div class="hero-arc hero-arc-2"></div>
     
     <div class="hero-container">
-      <!-- LEFT SIDE - Text Content -->
       <div class="hero-content">
         <div class="hero-tag">
           <div class="hero-tag-dot"></div>
@@ -1194,7 +1532,6 @@
         </div>
       </div>
       
-      <!-- RIGHT SIDE - Image -->
       <div class="hero-right">
         <div class="hero-image-container">
           <img 
@@ -1208,29 +1545,23 @@
 
   <!-- MAIN CONTENT WITH SIDEBAR -->
   <div class="main-layout">
-    <!-- MAIN CONTENT -->
     <div class="main-content">
       
-      <!-- WHAT WE DO SECTION -->
+      <!-- WHAT WE DO -->
       <section class="section" id="about">
         <div class="section-header">
-          <div class="section-label">
-            <span>WHAT WE DO</span>
-          </div>
+          <div class="section-label"><span>WHAT WE DO</span></div>
           <h2>The Next Generation of Change Agents</h2>
         </div>
-        
         <p class="section-intro">
           Founded in 2013, Executives Helping Initiative is a youth-led movement of<br> 
-          fighting poverty through action.We show up at orphanages, prisons, hospitals,<br> 
+          fighting poverty through action. We show up at orphanages, prisons, hospitals,<br> 
           and underserved communities across Lagos—delivering food, 
           medical care, hope, and second chances.
         </p>
-        
         <div class="impact-quote">
           We don't just raise awareness. We implement solutions.
         </div>
-        
         <div class="focus-grid">
           <h4>Our Focus Areas</h4>
           <div class="focus-items">
@@ -1244,23 +1575,19 @@
         </div>
       </section>
 
-      <!-- OUR IMPACT SECTION -->
+      <!-- OUR IMPACT -->
       <section class="section" id="impact">
         <div class="section-header">
-          <div class="section-label">
-            <span>OUR IMPACT</span>
-          </div>
+          <div class="section-label"><span>OUR IMPACT</span></div>
           <h2>Measurable Change, Real Lives</h2>
         </div>
-        
         <div class="recognition-badge">
           <p>
             <strong>Recognized by SME 100 Nigeria (2018)</strong> for invaluable contributions 
-            to active citizenry and engagement in Nigeria.Our pragmatic, strategic approach 
-            has touched lives across Lagos
+            to active citizenry and engagement in Nigeria. Our pragmatic, strategic approach 
+            has touched lives across Lagos.
           </p>
         </div>
-        
         <div class="impact-stats">
           <div class="stat-card">
             <div class="stat-number">30+</div>
@@ -1274,12 +1601,11 @@
             <div class="stat-number">1500+</div>
             <div class="stat-label">Prison Inmates empowered and Motivated</div>
           </div>
-         <div class="stat-card">
+          <div class="stat-card">
             <div class="stat-number">700+</div>
-            <div class="stat-label">Youth volunteers equiped with leadership and change advocacy Mindset</div>
+            <div class="stat-label">Youth volunteers equipped with leadership and change advocacy mindset</div>
           </div>
         </div>
-        
         <p class="section-intro">
           <strong>What makes us different?</strong> We're a leadership incubator disguised as a charity. 
           Every volunteer leads projects, builds skills, and becomes a change agent. We've pioneered 
@@ -1288,15 +1614,12 @@
         </p>
       </section>
 
-      <!-- PROGRAMS SECTION -->
+      <!-- PROGRAMS -->
       <section class="section" id="programs">
         <div class="section-header">
-          <div class="section-label">
-            <span>OUR PROGRAMS</span>
-          </div>
+          <div class="section-label"><span>OUR PROGRAMS</span></div>
           <h2>Making Impact Every Month</h2>
         </div>
-        
         <div class="programs-grid">
           <a href="/eotm-charity-series.html" class="program-card">
             <div class="program-number">Program 01</div>
@@ -1307,7 +1630,6 @@
             </p>
             <span class="program-link">Explore EOTM</span>
           </a>
-          
           <a href="/charity-series.html" class="program-card">
             <div class="program-number">Program 02</div>
             <h3>The Charity Series</h3>
@@ -1320,7 +1642,7 @@
         </div>
       </section>
 
-      <!-- CTA SECTION -->
+      <!-- CTA -->
       <section class="cta-section" id="contact">
         <h2>Join the Movement</h2>
         <p>
@@ -1338,13 +1660,26 @@
 
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR / FOUNDER CARD -->
     <aside class="sidebar" id="founder">
       <div class="founder-card">
         <div class="founder-header">
           <span class="founder-label">MEET OUR FOUNDER</span>
         </div>
-        
+
+        <!-- ★ FOUNDER PHOTO ★ -->
+        <div class="founder-photo-wrap">
+          <div class="founder-photo-ring">
+            <img
+              src="dare-asobele.jpg"
+              alt="Dare Asobele – Founder, Executives Helping Initiative"
+              onerror="this.src='https://placehold.co/130x130/1a4530/e89c4a?text=DA'; this.onerror=null;"
+            />
+            <div class="founder-photo-glow"></div>
+          </div>
+        </div>
+        <!-- ★ END FOUNDER PHOTO ★ -->
+
         <div class="founder-content">
           <h3>Dare Asobele</h3>
           <p class="founder-title">Founder & Visionary</p>
@@ -1356,12 +1691,11 @@
           </div>
           
           <p class="founder-bio">
-            Timothy-Asobele Emmanuel Dare—known simply as Dare Asobele founded 
+            Timothy-Asobele Emmanuel Dare—known simply as Dare Asobele—founded 
             Executives Helping Initiative in 2013 while studying law at the University of Lagos. 
-            What sparked this journey? Anger turned into action.Dare after 
-            visiting an orphanage and realizing good intentions weren't enough. Inspired 
-            by legal giants Chief Gani Fawehinmi and Judge Chukwudifu Oputa, he rallied 
-            five friends and turned compassion into a national movement.
+            What sparked this journey? Anger turned into action after visiting an orphanage and 
+            realizing good intentions weren't enough. Inspired by legal giants Chief Gani Fawehinmi 
+            and Judge Chukwudifu Oputa, he rallied five friends and turned compassion into a national movement.
           </p>
           
           <div class="founder-achievements">
@@ -1374,7 +1708,89 @@
           </blockquote>
         </div>
       </div>
+
+      <!-- ★ GALLERY CARD ★ -->
+      <div class="gallery-card" id="gallery">
+        <div class="gallery-card-header">
+          <span class="gallery-label">📸 Our Gallery</span>
+          <span class="gallery-count" id="gallery-count">0 photos</span>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+          <!--
+            HOW TO ADD YOUR PHOTOS:
+            Replace any slot below with:
+
+            <div class="gallery-item"
+                 data-src="your-photo.jpg"
+                 data-caption="Your caption"
+                 onclick="openLightbox(this)">
+              <img src="your-photo.jpg" alt="Your caption" />
+            </div>
+
+            Just drop your .jpg files in the same folder as index.html
+            and name them gallery1.jpg, gallery2.jpg, gallery3.jpg…
+          -->
+
+          <!-- SLOT 1 -->
+          <div class="gallery-item" data-src="gallery1.jpg" data-caption="Community Outreach" onclick="openLightbox(this)">
+            <img src="gallery1.jpg" alt="Community Outreach"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- SLOT 2 -->
+          <div class="gallery-item" data-src="gallery2.jpg" data-caption="Orphanage Visit" onclick="openLightbox(this)">
+            <img src="gallery2.jpg" alt="Orphanage Visit"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- SLOT 3 -->
+          <div class="gallery-item" data-src="gallery3.jpg" data-caption="Prison Outreach" onclick="openLightbox(this)">
+            <img src="gallery3.jpg" alt="Prison Outreach"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- SLOT 4 -->
+          <div class="gallery-item" data-src="gallery4.jpg" data-caption="Health Support" onclick="openLightbox(this)">
+            <img src="gallery4.jpg" alt="Health Support"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- SLOT 5 -->
+          <div class="gallery-item" data-src="gallery5.jpg" data-caption="Youth Leadership" onclick="openLightbox(this)">
+            <img src="gallery5.jpg" alt="Youth Leadership"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- SLOT 6 -->
+          <div class="gallery-item" data-src="gallery6.jpg" data-caption="Community Impact" onclick="openLightbox(this)">
+            <img src="gallery6.jpg" alt="Community Impact"
+              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
+          </div>
+
+          <!-- Add more slots by copying any block above ↑ -->
+        </div>
+
+        <div class="gallery-footer">
+          <p class="gallery-hint">
+            Drop your photos in your project folder named <code>gallery1.jpg</code>, <code>gallery2.jpg</code>… to fill the slots above.
+          </p>
+        </div>
+      </div>
+      <!-- ★ END GALLERY CARD ★ -->
+
     </aside>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnOverlay(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)">&#8249;</button>
+      <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)">&#8250;</button>
+      <img id="lightbox-img" src="" alt="" />
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
   </div>
 
   <!-- FOOTER -->
@@ -1458,23 +1874,74 @@
   </footer>
 
   <script>
-    // Header scroll effect
     window.addEventListener('scroll', function() {
       const header = document.querySelector('header');
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+      header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Mobile menu toggle
-    function toggleMenu() {
-      const nav = document.querySelector('.header-nav');
-      nav.classList.toggle('active');
+    // ── Gallery photo counter ──────────────────────────────────────────
+    function updateGalleryCount() {
+      const filled = document.querySelectorAll('.gallery-item:not(.gallery-empty)').length;
+      const countEl = document.getElementById('gallery-count');
+      if (countEl) countEl.textContent = filled + (filled === 1 ? ' photo' : ' photos');
+    }
+    // Run once images have had a chance to load / error
+    window.addEventListener('load', updateGalleryCount);
+    // Also observe DOM changes so the count updates when onerror fires
+    new MutationObserver(updateGalleryCount)
+      .observe(document.getElementById('gallery-grid') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+
+    // ── Lightbox ──────────────────────────────────────────────────────
+    let lightboxItems = [];
+    let lightboxIndex = 0;
+
+    function openLightbox(el) {
+      // Build list of all filled (non-empty) gallery items
+      lightboxItems = Array.from(document.querySelectorAll('.gallery-item:not(.gallery-empty)'));
+      lightboxIndex = lightboxItems.indexOf(el);
+      showLightboxSlide(lightboxIndex);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Smooth scroll for anchor links
+    function showLightboxSlide(idx) {
+      const item = lightboxItems[idx];
+      if (!item) return;
+      document.getElementById('lightbox-img').src = item.dataset.src || '';
+      document.getElementById('lightbox-img').alt = item.dataset.caption || '';
+      document.getElementById('lightbox-caption').textContent = item.dataset.caption || '';
+      // Hide nav arrows if only one photo
+      document.querySelector('.lightbox-prev').style.display = lightboxItems.length > 1 ? 'flex' : 'none';
+      document.querySelector('.lightbox-next').style.display = lightboxItems.length > 1 ? 'flex' : 'none';
+    }
+
+    function shiftLightbox(dir) {
+      lightboxIndex = (lightboxIndex + dir + lightboxItems.length) % lightboxItems.length;
+      showLightboxSlide(lightboxIndex);
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnOverlay(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeLightbox();
+      if (e.key === 'ArrowLeft')   shiftLightbox(-1);
+      if (e.key === 'ArrowRight')  shiftLightbox(1);
+    });
+
+    function toggleMenu() {
+      document.querySelector('.header-nav').classList.toggle('active');
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -1482,18 +1949,13 @@
           e.preventDefault();
           const target = document.querySelector(href);
           if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-            // Close mobile menu if open
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             document.querySelector('.header-nav').classList.remove('active');
           }
         }
       });
     });
 
-    // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
       const nav = document.querySelector('.header-nav');
       const menuBtn = document.querySelector('.mobile-menu-btn');
