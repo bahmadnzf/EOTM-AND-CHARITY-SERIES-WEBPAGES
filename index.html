@@ -7,1775 +7,572 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest: #0f2d1c;
-      --forest-mid: #1a4530;
+      --forest:       #0f2d1c;
+      --forest-mid:   #1a4530;
       --forest-light: #265e42;
-      --sage: #4a8c63;
-      --sage-light: #6eb88a;
-      --amber: #c97b2a;
-      --amber-light: #e89c4a;
-      --warm-white: #fdf8f2;
-      --off-white: #f4ede2;
-      --cream: #ede4d4;
-      --text: #1a2e22;
-      --text-mid: #3d5a45;
-      --text-soft: #6e8f79;
+      --sage:         #4a8c63;
+      --sage-light:   #6eb88a;
+      --amber:        #c97b2a;
+      --amber-light:  #e89c4a;
+      --warm-white:   #fdf8f2;
+      --off-white:    #f4ede2;
+      --cream:        #ede4d4;
+      --text:         #1a2e22;
+      --text-mid:     #3d5a45;
+      --text-soft:    #6e8f79;
+      --sidebar-w:    260px;
+      --header-h:     68px;
     }
-    
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
-    
-    html { 
-      scroll-behavior: smooth; 
-    }
-    
-    body { 
-      font-family: 'Outfit', sans-serif; 
-      background: var(--warm-white); 
-      color: var(--text); 
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--warm-white); color: var(--text); overflow-x: hidden; line-height: 1.6; }
 
-    /* ===================================
-       HEADER
-       =================================== */
-    header { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      right: 0; 
-      z-index: 100; 
-      background: rgba(253, 248, 242, 0.98);
+    /* TOPBAR */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: rgba(253,248,242,0.97);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--cream); 
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.03);
+      border-bottom: 1px solid var(--cream);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 0 14px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+      transition: box-shadow .3s;
     }
-    
-    header.scrolled {
-      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    .topbar.scrolled { box-shadow: 0 4px 28px rgba(0,0,0,0.09); }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .sidebar-toggle {
+      width: 42px; height: 42px; border: none;
+      background: var(--off-white); border-radius: 10px;
+      cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px;
+      flex-shrink: 0; transition: background .2s;
     }
+    .sidebar-toggle:hover { background: var(--cream); }
+    .sidebar-toggle span { display: block; width: 20px; height: 2px; background: var(--forest); border-radius: 2px; transition: all .3s ease; }
+    body.nav-open .sidebar-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    body.nav-open .sidebar-toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    body.nav-open .sidebar-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .logo-wrap { text-decoration: none; }
+    .logo-primary { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--forest); line-height: 1.1; letter-spacing: -.02em; }
+    .logo-sub { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-soft); font-weight: 500; }
+    .topbar-cta {
+      background: var(--forest); color: var(--warm-white);
+      padding: 9px 18px; border-radius: 100px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .03em;
+      text-decoration: none; white-space: nowrap;
+      transition: all .25s; box-shadow: 0 3px 10px rgba(15,45,28,.2);
+    }
+    .topbar-cta:hover { background: var(--forest-light); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(15,45,28,.28); }
 
-    .header-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 20px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* SIDEBAR NAV */
+    .sidebar-nav {
+      position: fixed; top: var(--header-h); left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--header-h));
+      background: var(--forest); z-index: 190;
+      transform: translateX(-100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 4px 0 30px rgba(0,0,0,.15);
     }
-    
-    .logo { 
-      display: flex; 
-      flex-direction: column; 
-      text-decoration: none;
-      transition: transform 0.3s ease;
+    body.nav-open .sidebar-nav { transform: translateX(0); }
+    @media (min-width: 1100px) {
+      .sidebar-nav { transform: translateX(0) !important; }
     }
-    
-    .logo:hover {
-      transform: translateY(-2px);
+    .sidebar-inner { padding: 24px 0 36px; flex: 1; }
+    .nav-section-label { font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.3); padding: 0 24px; margin: 18px 0 8px; }
+    .nav-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 24px; color: rgba(255,255,255,.7);
+      text-decoration: none; font-size: .88rem; font-weight: 500;
+      position: relative; transition: all .22s;
+      border-left: 3px solid transparent;
     }
-    
-    .logo-primary { 
-      font-family: 'Cormorant Garamond', serif; 
-      font-size: 1.5rem; 
-      font-weight: 700; 
-      color: var(--forest); 
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,.07); border-left-color: var(--amber); }
+    .nav-icon { width: 20px; text-align: center; font-size: .95rem; flex-shrink: 0; opacity: .7; }
+    .nav-link:hover .nav-icon, .nav-link.active .nav-icon { opacity: 1; }
+    .nav-divider { height: 1px; background: rgba(255,255,255,.07); margin: 10px 24px; }
+    .nav-cta-wrap { padding: 4px 18px 8px; }
+    .nav-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 11px 16px;
+      background: linear-gradient(135deg, var(--amber), #d68b3a);
+      color: var(--warm-white); border-radius: 10px;
+      font-size: .83rem; font-weight: 600; letter-spacing: .04em;
+      text-decoration: none; box-shadow: 0 4px 14px rgba(201,123,42,.3);
+      transition: all .25s;
     }
-    
-    .logo-sub { 
-      font-size: 0.7rem; 
-      letter-spacing: 0.14em; 
-      text-transform: uppercase; 
-      color: var(--text-soft); 
-      font-weight: 500; 
-    }
-    
-    .header-nav { 
-      display: flex; 
-      gap: 32px; 
-      align-items: center; 
-    }
-    
-    .header-nav a { 
-      text-decoration: none; 
-      font-size: 0.875rem; 
-      color: var(--text-mid); 
-      font-weight: 500; 
-      letter-spacing: 0.02em; 
-      transition: all 0.2s;
-      position: relative;
-    }
-    
-    .header-nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--amber);
-      transition: width 0.3s ease;
-    }
-    
-    .header-nav a:hover { 
-      color: var(--forest); 
-    }
-    
-    .header-nav a:hover::after {
-      width: 100%;
-    }
-    
-    .header-btn { 
-      background: var(--forest); 
-      color: var(--warm-white) !important; 
-      padding: 11px 26px; 
-      border-radius: 100px;
-      box-shadow: 0 4px 12px rgba(15, 45, 28, 0.2);
-      font-weight: 600;
-    }
-    
-    .header-btn::after {
-      display: none;
-    }
-    
-    .header-btn:hover { 
-      background: var(--forest-light) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(15, 45, 28, 0.3);
-    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,123,42,.42); }
+    .sidebar-brand-footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,.07); }
+    .sidebar-brand-footer p { font-size: .72rem; color: rgba(255,255,255,.3); line-height: 1.5; }
 
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--forest);
-      cursor: pointer;
-      padding: 8px;
-    }
+    /* OVERLAY */
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(10,24,15,.52); z-index: 180; backdrop-filter: blur(2px); opacity: 0; transition: opacity .3s; }
+    body.nav-open .nav-overlay { display: block; opacity: 1; }
+    @media (min-width: 1100px) { .nav-overlay { display: none !important; } }
 
-    /* ===================================
-       HERO SECTION
-       =================================== */
+    /* PAGE WRAP */
+    .page-wrap { padding-top: var(--header-h); transition: margin-left .35s cubic-bezier(.4,0,.2,1); }
+    @media (min-width: 1100px) { .page-wrap { margin-left: var(--sidebar-w); } }
+
+    /* HERO */
     .hero-section {
-      min-height: 100vh;
+      min-height: calc(100vh - var(--header-h));
       background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      padding: 140px 6% 100px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      padding: 80px 6% 80px;
     }
-
     .hero-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,123,42,0.15) 0%, transparent 55%),
-        linear-gradient(to bottom, transparent 25%, rgba(15,45,28,0.7) 65%, var(--forest) 100%);
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,123,42,.15) 0%, transparent 55%),
+        linear-gradient(to bottom, transparent 25%, rgba(15,45,28,.7) 70%, var(--forest) 100%);
       pointer-events: none;
     }
-
-    .hero-arc {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.06);
-      animation: float 20s infinite ease-in-out;
-    }
-
-    .hero-arc-1 {
-      width: 700px;
-      height: 700px;
-      top: -250px;
-      right: -180px;
-    }
-
-    .hero-arc-2 {
-      width: 400px;
-      height: 400px;
-      bottom: 80px;
-      left: -120px;
-      animation-delay: -10s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(20px, -20px) scale(1.05); }
-    }
-
-    .hero-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 80px;
-    }
-
-    .hero-content {
-      flex: 1;
-      min-width: 320px;
-    }
-
-    .hero-right {
-      flex: 1.3;
-      min-width: 360px;
-      display: flex;
-      justify-content: flex-end;
-      animation: fadeInUp 1s ease-out 0.5s both;
-    }
-
-    .hero-image-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-    }
-
+    .hero-arc { position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.06); animation: floatArc 20s infinite ease-in-out; }
+    .hero-arc-1 { width: 580px; height: 580px; top: -200px; right: -120px; }
+    .hero-arc-2 { width: 320px; height: 320px; bottom: 50px; left: -90px; animation-delay: -10s; }
+    @keyframes floatArc { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(14px,-14px) scale(1.04); } }
+    .hero-container { max-width: 1220px; margin: 0 auto; position: relative; z-index: 2; width: 100%; display: flex; align-items: center; gap: 60px; }
+    .hero-content { flex: 1; min-width: 280px; }
+    .hero-right { flex: 1.2; min-width: 280px; display: flex; justify-content: flex-end; animation: fadeUp 1s ease-out .5s both; }
+    .hero-image-container { position: relative; width: 100%; max-width: 540px; }
     .hero-image-container::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      right: 20px;
-      bottom: 20px;
+      content: ''; position: absolute; top: -16px; left: -16px; right: 16px; bottom: 16px;
       background: linear-gradient(135deg, var(--amber) 0%, var(--sage-light) 100%);
-      border-radius: 24px;
-      opacity: 0.2;
-      z-index: 0;
-      animation: float 8s infinite ease-in-out;
+      border-radius: 20px; opacity: .18; animation: floatArc 8s infinite ease-in-out;
     }
-
     .hero-image-container img {
-      width: 100%;
-      height: auto;
-      border-radius: 24px;
-      box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.4),
-        0 10px 20px rgba(0, 0, 0, 0.3);
-      position: relative;
-      z-index: 1;
-      transition: transform 0.5s ease;
-      border: 3px solid rgba(255, 255, 255, 0.1);
+      width: 100%; height: auto; border-radius: 20px;
+      box-shadow: 0 26px 52px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.26);
+      position: relative; z-index: 1;
+      border: 2px solid rgba(255,255,255,.1); transition: transform .4s ease;
+    }
+    .hero-image-container:hover img { transform: scale(1.02); }
+    .hero-tag { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; background: rgba(201,123,42,.12); padding: 8px 18px; border-radius: 100px; border: 1px solid rgba(201,123,42,.25); animation: fadeUp .8s ease-out .2s both; }
+    .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber-light); animation: pulse 2s infinite; }
+    .hero-tag span { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--amber-light); }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.2); } }
+    .hero-content h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem,7vw,5.8rem); font-weight: 700; line-height: .96; color: var(--warm-white); margin-bottom: 24px; animation: fadeUp .8s ease-out .4s both; letter-spacing: -.03em; text-shadow: 0 4px 16px rgba(0,0,0,.3); }
+    .hero-content h1 em { font-style: italic; color: var(--amber-light); display: block; margin-top: 6px; }
+    .hero-description { font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,.72); margin-bottom: 36px; max-width: 520px; animation: fadeUp .8s ease-out .6s both; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp .8s ease-out .8s both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 100px; font-size: .88rem; font-weight: 600; letter-spacing: .02em; text-decoration: none; transition: all .3s cubic-bezier(.4,0,.2,1); cursor: pointer; border: none; }
+    .btn-primary { background: var(--amber); color: var(--warm-white); box-shadow: 0 4px 16px rgba(201,123,42,.3); }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(201,123,42,.42); }
+    .btn-secondary { border: 2px solid rgba(255,255,255,.3); color: rgba(255,255,255,.95); background: rgba(255,255,255,.05); }
+    .btn-secondary:hover { border-color: rgba(255,255,255,.65); color: #fff; background: rgba(255,255,255,.1); transform: translateY(-3px); }
+
+    /* CONTENT AREA */
+    .content-area { max-width: 960px; margin: 0 auto; padding: 80px 5%; }
+
+    /* SECTION */
+    .section { margin-bottom: 90px; }
+    .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: .7rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--sage); margin-bottom: 12px; }
+    .section-label::before { content: ''; width: 34px; height: 2px; background: linear-gradient(90deg, var(--sage), transparent); }
+    .section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem,4vw,3rem); font-weight: 700; line-height: 1.15; color: var(--forest); letter-spacing: -.02em; margin-bottom: 18px; }
+    .section-intro { font-size: 1rem; line-height: 1.85; color: var(--text-mid); margin-bottom: 24px; }
+
+    /* IMPACT QUOTE */
+    .impact-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-style: italic; font-weight: 500; line-height: 1.5; color: var(--forest); margin: 32px 0; padding: 26px 34px; background: linear-gradient(135deg, var(--off-white) 0%, var(--cream) 100%); border-left: 4px solid var(--amber); border-radius: 0 12px 12px 0; box-shadow: 0 4px 16px rgba(0,0,0,.04); position: relative; }
+    .impact-quote::before { content: '"'; font-size: 3rem; font-family: Georgia, serif; color: var(--amber); opacity: .2; position: absolute; top: -6px; left: 14px; line-height: 1; }
+
+    /* FOCUS GRID */
+    .focus-grid { background: var(--forest); padding: 38px 40px; border-radius: 16px; box-shadow: 0 8px 26px rgba(15,45,28,.14); position: relative; overflow: hidden; margin-top: 32px; }
+    .focus-grid::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber)); }
+    .focus-grid h4 { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--amber-light); margin-bottom: 22px; }
+    .focus-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 10px; }
+    .focus-item { font-size: .88rem; font-weight: 500; color: var(--warm-white); padding: 11px 16px 11px 38px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.1); border-radius: 8px; transition: all .28s; position: relative; }
+    .focus-item::before { content: '✓'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: .95rem; color: var(--amber-light); font-weight: 700; }
+    .focus-item:hover { background: rgba(201,123,42,.12); border-color: rgba(201,123,42,.35); transform: translateX(4px); }
+
+    /* STATS */
+    .impact-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin: 32px 0; }
+    .stat-card { background: var(--off-white); padding: 26px 22px; border-radius: 12px; border: 2px solid var(--cream); transition: all .3s; }
+    .stat-card:hover { border-color: var(--sage-light); transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: var(--forest); line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: .88rem; color: var(--text-mid); line-height: 1.5; }
+    .recognition-badge { background: linear-gradient(135deg, var(--amber) 0%, #d68b3a 100%); color: var(--warm-white); padding: 22px 26px; border-radius: 12px; margin: 32px 0; box-shadow: 0 8px 20px rgba(201,123,42,.22); }
+    .recognition-badge p { font-size: .98rem; line-height: 1.7; margin: 0; }
+    .recognition-badge strong { font-weight: 700; }
+
+    /* PROGRAMS */
+    .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; margin-top: 36px; }
+    .program-card { background: var(--warm-white); border: 2px solid var(--cream); border-radius: 16px; padding: 34px 30px; text-decoration: none; color: inherit; transition: all .3s; position: relative; overflow: hidden; }
+    .program-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--sage), var(--amber)); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+    .program-card:hover { border-color: var(--sage-light); transform: translateY(-6px); box-shadow: 0 12px 34px rgba(0,0,0,.1); }
+    .program-card:hover::before { transform: scaleX(1); }
+    .program-number { font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sage); margin-bottom: 12px; }
+    .program-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--forest); margin-bottom: 12px; line-height: 1.2; }
+    .program-description { font-size: .9rem; line-height: 1.7; color: var(--text-mid); margin-bottom: 22px; }
+    .program-link { display: inline-flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 600; color: var(--amber); letter-spacing: .05em; text-transform: uppercase; }
+    .program-link::after { content: '→'; font-size: 1.05rem; transition: transform .28s; }
+    .program-card:hover .program-link::after { transform: translateX(4px); }
+
+    /* CTA SECTION */
+    .cta-section { background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); padding: 68px 40px; border-radius: 20px; text-align: center; margin: 70px 0; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber)); }
+    .cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; color: var(--warm-white); margin-bottom: 16px; }
+    .cta-section p { font-size: .98rem; line-height: 1.8; color: rgba(255,255,255,.72); max-width: 560px; margin: 0 auto 30px; }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOUNDER */
+    .founder-full { background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 12px 38px rgba(15,45,28,.22); position: relative; }
+    .founder-full::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber)); }
+    .founder-full-inner { display: flex; align-items: stretch; }
+    .founder-photo-col { width: 210px; flex-shrink: 0; background: rgba(0,0,0,.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 44px 24px; border-right: 1px solid rgba(255,255,255,.08); }
+    .founder-photo-ring { position: relative; width: 136px; height: 136px; }
+    .founder-photo-ring::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(var(--amber) 0deg, var(--sage-light) 120deg, var(--amber-light) 240deg, var(--amber) 360deg); animation: spinRing 8s linear infinite; z-index: 0; }
+    .founder-photo-ring::after { content: ''; position: absolute; inset: -1px; border-radius: 50%; background: var(--forest); z-index: 1; }
+    @keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .founder-photo-ring img { position: relative; z-index: 2; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: top center; display: block; }
+    .founder-name-main { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--warm-white); margin-top: 14px; text-align: center; line-height: 1.2; }
+    .founder-name-title { font-size: .8rem; font-weight: 500; color: var(--sage-light); margin-top: 4px; text-align: center; }
+    .founder-info-col { flex: 1; padding: 38px 40px; min-width: 0; }
+    .founder-credentials { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .credential-tag { font-size: .78rem; font-weight: 500; color: rgba(255,255,255,.85); padding: 5px 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; }
+    .founder-bio { font-size: .9rem; line-height: 1.75; color: rgba(255,255,255,.7); margin-bottom: 18px; }
+    .founder-achievements { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; }
+    .founder-achievements p { font-size: .8rem; color: rgba(255,255,255,.62); margin: 0; line-height: 1.6; }
+    .founder-achievements p:first-child { margin-bottom: 5px; color: rgba(255,255,255,.85); font-weight: 500; }
+    .founder-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; font-style: italic; font-weight: 500; color: var(--amber-light); margin: 0; padding: 16px 20px; background: rgba(201,123,42,.1); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; position: relative; }
+    .founder-quote::before { content: '"'; font-size: 2.6rem; font-family: Georgia, serif; color: var(--amber); opacity: .28; position: absolute; top: 4px; left: 6px; line-height: 1; }
+
+    /* GALLERY */
+    .gallery-section { background: var(--off-white); border: 2px solid var(--cream); border-radius: 16px; overflow: hidden; }
+    .gallery-section-header { padding: 18px 22px 14px; border-bottom: 1px solid var(--cream); display: flex; align-items: center; justify-content: space-between; }
+    .gallery-label-text { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sage); }
+    .gallery-count-badge { font-size: .7rem; font-weight: 600; color: var(--text-soft); background: var(--cream); padding: 3px 10px; border-radius: 100px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 14px; }
+    .gallery-item { position: relative; aspect-ratio: 1/1; border-radius: 7px; overflow: hidden; cursor: pointer; background: var(--cream); border: 2px solid transparent; transition: all .24s; }
+    .gallery-item:hover { border-color: var(--amber); transform: scale(1.04); z-index: 2; box-shadow: 0 5px 16px rgba(201,123,42,.22); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item::after { content: '🔍'; position: absolute; inset: 0; background: rgba(15,45,28,.42); display: flex; align-items: center; justify-content: center; font-size: 1rem; opacity: 0; transition: opacity .22s; }
+    .gallery-item:hover::after { opacity: 1; }
+    .gallery-item.gallery-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--cream); cursor: default; }
+    .gallery-item.gallery-empty:hover { border-color: var(--sage-light); transform: none; box-shadow: none; }
+    .gallery-item.gallery-empty::after { display: none; }
+    .gallery-empty-icon { font-size: 1.2rem; margin-bottom: 3px; opacity: .35; }
+    .gallery-empty-text { font-size: .56rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-soft); opacity: .55; text-align: center; }
+    .gallery-section-footer { padding: 0 14px 14px; }
+    .gallery-hint { font-size: .75rem; color: var(--text-soft); text-align: center; padding: 9px; background: var(--cream); border-radius: 8px; line-height: 1.5; }
+
+    /* LIGHTBOX */
+    .lightbox-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,24,15,.93); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 24px; }
+    .lightbox-overlay.open { display: flex; animation: lbFade .2s ease; }
+    @keyframes lbFade { from { opacity:0; } to { opacity:1; } }
+    .lightbox-inner { position: relative; max-width: 860px; width: 100%; animation: lbScale .25s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes lbScale { from { opacity:0; transform:scale(.88); } to { opacity:1; transform:scale(1); } }
+    .lightbox-inner img { width: 100%; max-height: 82vh; object-fit: contain; border-radius: 12px; box-shadow: 0 26px 66px rgba(0,0,0,.6); display: block; }
+    .lightbox-caption { text-align: center; color: rgba(255,255,255,.62); font-size: .86rem; margin-top: 12px; }
+    .lightbox-close { position: absolute; top: -44px; right: 0; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; border-radius: 50%; width: 36px; height: 36px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .lightbox-close:hover { background: var(--amber); border-color: var(--amber); }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; border-radius: 50%; width: 44px; height: 44px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .lightbox-nav:hover { background: var(--amber); border-color: var(--amber); }
+    .lightbox-prev { left: -58px; } .lightbox-next { right: -58px; }
+
+    /* FOOTER */
+    footer { background: var(--forest); padding: 52px 5% 26px; border-top: 1px solid rgba(255,255,255,.06); }
+    .footer-inner { max-width: 960px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 36px; }
+    .footer-about h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--warm-white); margin-bottom: 12px; }
+    .footer-about p { font-size: .88rem; line-height: 1.7; color: rgba(255,255,255,.58); margin-bottom: 20px; }
+    .footer-section h4 { font-size: .76rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--amber-light); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 9px; }
+    .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .86rem; transition: all .2s; display: flex; align-items: center; gap: 6px; }
+    .footer-links a::before { content:'→'; opacity:0; transform:translateX(-5px); transition:all .2s; }
+    .footer-links a:hover { color: var(--amber-light); transform: translateX(5px); }
+    .footer-links a:hover::before { opacity:1; transform:translateX(0); }
+    .contact-info { display: flex; flex-direction: column; gap: 11px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 9px; font-size: .86rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+    .contact-item a { color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
+    .contact-item a:hover { color: var(--amber-light); }
+    .social-links { display: flex; gap: 9px; margin-top: 18px; }
+    .social-link { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 50%; color: rgba(255,255,255,.65); text-decoration: none; transition: all .3s; }
+    .social-link:hover { background: var(--amber); border-color: var(--amber); color: var(--warm-white); transform: translateY(-3px); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding-top: 22px; text-align: center; font-size: .78rem; color: rgba(255,255,255,.28); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .founder-full-inner { flex-direction: column; }
+      .founder-photo-col { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); padding: 32px 24px 24px; flex-direction: row; gap: 20px; align-items: center; justify-content: flex-start; }
+      .founder-name-main, .founder-name-title { text-align: left; }
+      .founder-info-col { padding: 26px 28px 32px; }
     }
-
-    .hero-image-container:hover img {
-      transform: scale(1.02);
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-      background: rgba(201, 123, 42, 0.12);
-      padding: 10px 24px;
-      border-radius: 100px;
-      border: 1px solid rgba(201, 123, 42, 0.25);
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-
-    .hero-tag-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--amber-light);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.2); }
-    }
-
-    .hero-tag span {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--amber-light);
-    }
-
-    .hero-content h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 9vw, 6.5rem);
-      font-weight: 700;
-      line-height: 0.95;
-      color: var(--warm-white);
-      margin-bottom: 32px;
-      animation: fadeInUp 0.8s ease-out 0.4s both;
-      letter-spacing: -0.03em;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .hero-content h1 em {
-      font-style: italic;
-      color: var(--amber-light);
-      display: block;
-      margin-top: 8px;
-    }
-
-    .hero-description {
-      font-size: 1.15rem;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 44px;
-      max-width: 600px;
-      animation: fadeInUp 0.8s ease-out 0.6s both;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      animation: fadeInUp 0.8s ease-out 0.8s both;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 15px 34px;
-      border-radius: 100px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--amber);
-      color: var(--warm-white);
-      box-shadow: 0 4px 20px rgba(201, 123, 42, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--amber-light);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(201, 123, 42, 0.4);
-    }
-
-    .btn-secondary {
-      border: 2px solid rgba(255,255,255,0.3);
-      color: rgba(255,255,255,0.95);
-      background: rgba(255,255,255,0.05);
-    }
-
-    .btn-secondary:hover {
-      border-color: rgba(255,255,255,0.6);
-      color: #fff;
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-3px);
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ===================================
-       MAIN CONTENT LAYOUT
-       =================================== */
-    .main-layout {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 60px;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 100px 6%;
-      position: relative;
-    }
-
-    .main-content {
-      min-width: 0;
-    }
-
-    /* ===================================
-       WHAT WE DO SECTION
-       =================================== */
-    .section {
-      margin-bottom: 100px;
-    }
-
-    .section-header {
-      margin-bottom: 48px;
-    }
-
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 16px;
-    }
-
-    .section-label::before {
-      content: '';
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--sage), transparent);
-    }
-
-    .section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.15;
-      color: var(--forest);
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-    }
-
-    .section-intro {
-      font-size: 1.1rem;
-      line-height: 1.85;
-      color: var(--text-mid);
-      margin-bottom: 32px;
-    }
-
-    .impact-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-style: italic;
-      font-weight: 500;
-      line-height: 1.5;
-      color: var(--forest);
-      margin: 40px 0;
-      padding: 32px 40px;
-      background: linear-gradient(135deg, var(--off-white) 0%, var(--cream) 100%);
-      border-left: 4px solid var(--amber);
-      border-radius: 0 12px 12px 0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-      position: relative;
-    }
-
-    .impact-quote::before {
-      content: '"';
-      font-size: 4rem;
-      font-family: Georgia, serif;
-      color: var(--amber);
-      opacity: 0.2;
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      line-height: 1;
-    }
-
-    .focus-grid {
-      background: var(--forest);
-      padding: 44px 48px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(15, 45, 28, 0.15);
-      position: relative;
-      overflow: hidden;
-      margin-top: 40px;
-    }
-
-    .focus-grid::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
-    }
-
-    .focus-grid h4 {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber-light);
-      margin-bottom: 28px;
-    }
-
-    .focus-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-
-    .focus-item {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--warm-white);
-      padding: 14px 20px 14px 44px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .focus-item::before {
-      content: '✓';
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
-      color: var(--amber-light);
-      font-weight: 700;
-    }
-
-    .focus-item:hover {
-      background: rgba(201, 123, 42, 0.12);
-      border-color: rgba(201, 123, 42, 0.35);
-      transform: translateX(5px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    /* ===================================
-       OUR IMPACT SECTION
-       =================================== */
-    .impact-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-      margin: 40px 0;
-    }
-
-    .stat-card {
-      background: var(--off-white);
-      padding: 32px 28px;
-      border-radius: 12px;
-      border: 2px solid var(--cream);
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      border-color: var(--sage-light);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: var(--forest);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      color: var(--text-mid);
-      line-height: 1.5;
-    }
-
-    .recognition-badge {
-      background: linear-gradient(135deg, var(--amber) 0%, #d68b3a 100%);
-      color: var(--warm-white);
-      padding: 28px 32px;
-      border-radius: 12px;
-      margin: 40px 0;
-      box-shadow: 0 8px 25px rgba(201, 123, 42, 0.25);
-    }
-
-    .recognition-badge p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    .recognition-badge strong {
-      font-weight: 700;
-    }
-
-    /* ===================================
-       PROGRAMS SECTION
-       =================================== */
-    .programs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-      margin-top: 48px;
-    }
-
-    .program-card {
-      background: var(--warm-white);
-      border: 2px solid var(--cream);
-      border-radius: 16px;
-      padding: 40px 36px;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .program-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--sage), var(--amber));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .program-card:hover {
-      border-color: var(--sage-light);
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-    }
-
-    .program-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .program-number {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 16px;
-    }
-
-    .program-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--forest);
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-
-    .program-description {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--text-mid);
-      margin-bottom: 28px;
-    }
-
-    .program-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--amber);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .program-link::after {
-      content: '→';
-      font-size: 1.2rem;
-      transition: transform 0.3s ease;
-    }
-
-    .program-card:hover .program-link::after {
-      transform: translateX(4px);
-    }
-
-    /* ===================================
-       CTA SECTION
-       =================================== */
-    .cta-section {
-      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
-      padding: 80px 48px;
-      border-radius: 20px;
-      text-align: center;
-      margin: 80px 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
-    }
-
-    .cta-section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 700;
-      color: var(--warm-white);
-      margin-bottom: 20px;
-    }
-
-    .cta-section p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.75);
-      max-width: 600px;
-      margin: 0 auto 36px;
-    }
-
-    .cta-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* ===================================
-       SIDEBAR
-       =================================== */
-    .sidebar {
-      position: sticky;
-      top: 120px;
-      height: fit-content;
-    }
-
-    .founder-card {
-      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(15, 45, 28, 0.25);
-      position: relative;
-    }
-
-    .founder-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--amber), var(--sage-light), var(--amber));
-    }
-
-    .founder-header {
-      padding: 28px 28px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .founder-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber-light);
-    }
-
-    /* ===================================
-       FOUNDER PHOTO — NEW
-       =================================== */
-    .founder-photo-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 28px 28px 0;
-    }
-
-    .founder-photo-ring {
-      position: relative;
-      width: 130px;
-      height: 130px;
-      flex-shrink: 0;
-    }
-
-    /* Animated amber ring */
-    .founder-photo-ring::before {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: conic-gradient(
-        var(--amber) 0deg,
-        var(--sage-light) 120deg,
-        var(--amber-light) 240deg,
-        var(--amber) 360deg
-      );
-      animation: spin-ring 8s linear infinite;
-      z-index: 0;
-    }
-
-    /* White gap between ring and photo */
-    .founder-photo-ring::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 50%;
-      background: var(--forest);
-      z-index: 1;
-    }
-
-    @keyframes spin-ring {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    .founder-photo-ring img {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
-
-    /* Subtle amber glow beneath the photo */
-    .founder-photo-glow {
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 16px;
-      background: var(--amber);
-      border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.35;
-      z-index: 1;
-    }
-
-    .founder-content {
-      padding: 20px 28px 32px;
-    }
-
-    .founder-content h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--warm-white);
-      margin: 0 0 10px 0;
-      line-height: 1.2;
-      text-align: center;
-    }
-
-    .founder-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--sage-light);
-      margin: 0 0 24px 0;
-      letter-spacing: 0.03em;
-      text-align: center;
-    }
-
-    .founder-credentials {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .credential-tag {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.85);
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 6px;
-      width: fit-content;
-    }
-
-    .founder-bio {
-      font-size: 0.92rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.75);
-      margin-bottom: 24px;
-    }
-
-    .founder-achievements {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 18px 20px;
-      margin-bottom: 24px;
-    }
-
-    .founder-achievements p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    .founder-achievements p:first-child {
-      margin-bottom: 8px;
-      color: rgba(255, 255, 255, 0.85);
-      font-weight: 500;
-    }
-
-    .founder-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      font-weight: 500;
-      color: var(--amber-light);
-      margin: 0;
-      padding: 20px 24px;
-      background: rgba(201, 123, 42, 0.1);
-      border-left: 3px solid var(--amber);
-      border-radius: 0 8px 8px 0;
-      position: relative;
-    }
-
-    .founder-quote::before {
-      content: '"';
-      font-size: 3rem;
-      font-family: Georgia, serif;
-      color: var(--amber);
-      opacity: 0.3;
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      line-height: 1;
-    }
-
-    /* ===================================
-       FOOTER
-       =================================== */
-    footer {
-      background: var(--forest);
-      padding: 60px 6% 32px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .footer-container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 60px;
-      margin-bottom: 48px;
-    }
-
-    .footer-about h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--warm-white);
-      margin-bottom: 16px;
-    }
-
-    .footer-about p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 24px;
-    }
-
-    .footer-section h4 {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--amber-light);
-      margin-bottom: 20px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .footer-links a::before {
-      content: '→';
-      opacity: 0;
-      transform: translateX(-5px);
-      transition: all 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--amber-light);
-      transform: translateX(5px);
-    }
-
-    .footer-links a:hover::before {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.6;
-    }
-
-    .contact-item a {
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .contact-item a:hover {
-      color: var(--amber-light);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .social-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 50%;
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .social-link:hover {
-      background: var(--amber);
-      border-color: var(--amber);
-      color: var(--warm-white);
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 28px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* ===================================
-       SIDEBAR GALLERY
-       =================================== */
-    .gallery-card {
-      margin-top: 24px;
-      background: var(--off-white);
-      border: 2px solid var(--cream);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 24px rgba(15, 45, 28, 0.08);
-    }
-
-    .gallery-card-header {
-      padding: 20px 24px 16px;
-      border-bottom: 1px solid var(--cream);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .gallery-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sage);
-    }
-
-    .gallery-count {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-soft);
-      background: var(--cream);
-      padding: 3px 10px;
-      border-radius: 100px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      padding: 16px;
-    }
-
-    .gallery-item {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      background: var(--cream);
-      border: 2px solid transparent;
-      transition: all 0.25s ease;
-    }
-
-    .gallery-item:hover {
-      border-color: var(--amber);
-      transform: scale(1.03);
-      z-index: 2;
-      box-shadow: 0 6px 20px rgba(201, 123, 42, 0.25);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.08);
-    }
-
-    /* Hover overlay on each thumb */
-    .gallery-item::after {
-      content: '🔍';
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 45, 28, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      border-radius: 6px;
-    }
-
-    .gallery-item:hover::after {
-      opacity: 1;
-    }
-
-    /* Empty placeholder slot */
-    .gallery-item.gallery-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 2px dashed var(--cream);
-      cursor: default;
-    }
-
-    .gallery-item.gallery-empty:hover {
-      border-color: var(--sage-light);
-      transform: none;
-      box-shadow: none;
-    }
-
-    .gallery-item.gallery-empty::after {
-      display: none;
-    }
-
-    .gallery-empty-icon {
-      font-size: 1.4rem;
-      margin-bottom: 4px;
-      opacity: 0.4;
-    }
-
-    .gallery-empty-text {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      opacity: 0.6;
-      text-align: center;
-      line-height: 1.3;
-    }
-
-    /* "View all" strip at the bottom */
-    .gallery-footer {
-      padding: 0 16px 16px;
-    }
-
-    .gallery-hint {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      text-align: center;
-      padding: 10px;
-      background: var(--cream);
-      border-radius: 8px;
-      line-height: 1.5;
-    }
-
-    .gallery-hint code {
-      font-size: 0.72rem;
-      background: rgba(15, 45, 28, 0.08);
-      padding: 1px 5px;
-      border-radius: 4px;
-      color: var(--forest);
-      font-family: monospace;
-    }
-
-    /* ===================================
-       LIGHTBOX
-       =================================== */
-    .lightbox-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(10, 24, 15, 0.92);
-      backdrop-filter: blur(8px);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      animation: fadeIn 0.2s ease;
-    }
-
-    .lightbox-overlay.open {
-      display: flex;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    .lightbox-inner {
-      position: relative;
-      max-width: 860px;
-      width: 100%;
-      animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.88); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    .lightbox-inner img {
-      width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-      display: block;
-    }
-
-    .lightbox-caption {
-      text-align: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem;
-      margin-top: 14px;
-      letter-spacing: 0.02em;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -44px;
-      right: 0;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .lightbox-close:hover {
-      background: var(--amber);
-      border-color: var(--amber);
-    }
-
-    .lightbox-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .lightbox-nav:hover {
-      background: var(--amber);
-      border-color: var(--amber);
-    }
-
-    .lightbox-prev { left: -60px; }
-    .lightbox-next { right: -60px; }
-
-    @media (max-width: 640px) {
-      .lightbox-prev { left: 8px; }
-      .lightbox-next { right: 8px; }
-      .lightbox-close { top: -48px; }
-    }
-
-    /* ===================================
-       RESPONSIVE DESIGN
-       =================================== */
-    @media (max-width: 1200px) {
-      .main-layout {
-        grid-template-columns: 1fr 340px;
-        gap: 50px;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-        gap: 60px;
-      }
-
-      .sidebar {
-        position: static;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-    }
-
     @media (max-width: 768px) {
-      .header-nav {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        background: var(--warm-white);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 100px 32px 32px;
-        gap: 24px;
-        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        transition: left 0.3s ease;
-        z-index: 99;
-      }
-
-      .header-nav.active {
-        left: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      .hero-section {
-        padding: 120px 6% 80px;
-        min-height: auto;
-      }
-
-      .hero-container {
-        flex-direction: column;
-        gap: 50px;
-      }
-
-      .hero-content,
-      .hero-right {
-        min-width: 100%;
-      }
-
-      .hero-right {
-        justify-content: center;
-      }
-
-      .hero-image-container {
-        max-width: 100%;
-      }
-
-      .main-layout {
-        padding: 80px 6%;
-      }
-
-      .section {
-        margin-bottom: 80px;
-      }
-
-      .programs-grid,
-      .impact-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .cta-section {
-        padding: 60px 32px;
-      }
-
-      .hero-actions,
-      .cta-actions {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
+      :root { --header-h: 60px; }
+      .hero-section { padding: 54px 5% 66px; min-height: auto; }
+      .hero-container { flex-direction: column; gap: 40px; }
+      .hero-content, .hero-right { min-width: 100%; }
+      .hero-right { justify-content: center; }
+      .hero-image-container { max-width: 100%; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .cta-actions { flex-direction: column; align-items: center; }
+      .cta-actions .btn { width: 100%; max-width: 320px; }
+      .focus-items { grid-template-columns: 1fr; }
+      .impact-stats { grid-template-columns: 1fr 1fr; }
+      .programs-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .content-area { padding: 56px 5%; }
+      .section { margin-bottom: 68px; }
+      .lightbox-prev { left: 8px; } .lightbox-next { right: 8px; }
+      .lightbox-close { top: -44px; }
     }
-
-    @media (max-width: 540px) {
-      .impact-quote {
-        font-size: 1.3rem;
-        padding: 24px 28px;
-      }
-
-      .focus-grid {
-        padding: 32px 24px;
-      }
-
-      .focus-items {
-        grid-template-columns: 1fr;
-      }
-
-      .program-card {
-        padding: 32px 28px;
-      }
+    @media (max-width: 480px) {
+      .impact-stats { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-quote { font-size: 1.15rem; padding: 20px 22px; }
+      .focus-grid { padding: 26px 20px; }
+      .cta-section { padding: 48px 22px; }
+      .logo-primary { font-size: 1rem; }
+      .topbar-cta { padding: 8px 13px; font-size: .73rem; }
+    }
+    @media (max-width: 360px) {
+      .topbar-cta { display: none; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-container">
-      <a href="/" class="logo">
-        <span class="logo-primary">Executives Helping Initiative</span>
-        <span class="logo-sub">People Helping People with Purpose</span>
+  <!-- TOPBAR -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="/" class="logo-wrap">
+        <div class="logo-primary">Executives Helping Initiative</div>
+        <div class="logo-sub">People Helping People with Purpose</div>
       </a>
-      <nav class="header-nav">
-        <a href="#about">About</a>
-        <a href="#programs">Programs</a>
-        <a href="#impact">Impact</a>
-        <a href="#founder">Founder</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
-        <a href="https://www.executivesinitiative.com" target="_blank" class="header-btn">Visit Main Site</a>
-      </nav>
-      <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </div>
+    <a href="https://www.executivesinitiative.com" target="_blank" class="topbar-cta">Visit Main Site ↗</a>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero-section">
-    <div class="hero-arc hero-arc-1"></div>
-    <div class="hero-arc hero-arc-2"></div>
-    
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-tag">
-          <div class="hero-tag-dot"></div>
-          <span>Transforming Lives</span>
-        </div>
-        
-        <h1>
-          People Helping<br />
-          People with<br />
-          <em>Purpose</em>
-        </h1>
-        
-        <p class="hero-description">
-          A youth-led movement transforming lives across Nigeria through strategic action, 
-          compassionate outreach, and unwavering commitment to communities that need it most.
-        </p>
-        
-        <div class="hero-actions">
-          <a href="#programs" class="btn btn-primary">Explore Our Programs</a>
-          <a href="#contact" class="btn btn-secondary">Get Involved</a>
-        </div>
-      </div>
-      
-      <div class="hero-right">
-        <div class="hero-image-container">
-          <img 
-            src="orphanage_visitation.jpg" 
-            alt="Executives Helping Initiative - Uplifting lives across Nigeria"
-            onerror="this.src='https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80'; this.onerror=null;">
-        </div>
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar-nav" id="sidebarNav" aria-label="Site navigation">
+    <div class="sidebar-inner">
+      <div class="nav-section-label">Navigate</div>
+      <a href="#about"    class="nav-link active" data-section="about">   <span class="nav-icon">🏠</span> About Us</a>
+      <a href="#programs" class="nav-link"         data-section="programs"><span class="nav-icon">📋</span> Programs</a>
+      <a href="#impact"   class="nav-link"         data-section="impact">  <span class="nav-icon">📊</span> Our Impact</a>
+      <a href="#founder"  class="nav-link"         data-section="founder"> <span class="nav-icon">👤</span> Founder</a>
+      <a href="#gallery"  class="nav-link"         data-section="gallery"> <span class="nav-icon">📸</span> Gallery</a>
+      <div class="nav-divider"></div>
+      <a href="#contact"  class="nav-link"         data-section="contact"> <span class="nav-icon">✉️</span> Contact Us</a>
+      <div class="nav-divider"></div>
+      <div class="nav-cta-wrap">
+        <a href="https://www.executivesinitiative.com" target="_blank" class="nav-cta">🌐 Visit Main Site</a>
       </div>
     </div>
-  </section>
+    <div class="sidebar-brand-footer">
+      <p>© 2026 Executives Helping Initiative<br>CAC/IT/NO 108431 · Lagos, Nigeria</p>
+    </div>
+  </nav>
 
-  <!-- MAIN CONTENT WITH SIDEBAR -->
-  <div class="main-layout">
-    <div class="main-content">
-      
-      <!-- WHAT WE DO -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- PAGE WRAP -->
+  <div class="page-wrap">
+
+    <!-- HERO -->
+    <section class="hero-section" id="home">
+      <div class="hero-arc hero-arc-1"></div>
+      <div class="hero-arc hero-arc-2"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-tag"><div class="hero-tag-dot"></div><span>Transforming Lives</span></div>
+          <h1>People Helping<br />People with<br /><em>Purpose</em></h1>
+          <p class="hero-description">A youth-led movement transforming lives across Nigeria through strategic action, compassionate outreach, and unwavering commitment to communities that need it most.</p>
+          <div class="hero-actions">
+            <a href="#programs" class="btn btn-primary">Explore Our Programs</a>
+            <a href="#contact" class="btn btn-secondary">Get Involved</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-image-container">
+            <img src="orphanage_visitation.jpg" alt="EHI – Uplifting lives across Nigeria" onerror="this.src='https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80'; this.onerror=null;" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+      <!-- ABOUT -->
       <section class="section" id="about">
-        <div class="section-header">
-          <div class="section-label"><span>WHAT WE DO</span></div>
-          <h2>The Next Generation of Change Agents</h2>
-        </div>
-        <p class="section-intro">
-          Founded in 2013, Executives Helping Initiative is a youth-led movement of<br> 
-          fighting poverty through action. We show up at orphanages, prisons, hospitals,<br> 
-          and underserved communities across Lagos—delivering food, 
-          medical care, hope, and second chances.
-        </p>
-        <div class="impact-quote">
-          We don't just raise awareness. We implement solutions.
-        </div>
+        <div class="section-label"><span>WHAT WE DO</span></div>
+        <h2>The Next Generation of Change Agents</h2>
+        <p class="section-intro">Founded in 2013, Executives Helping Initiative is a youth-led movement fighting poverty through action. We show up at orphanages, prisons, hospitals, and underserved communities across Lagos — delivering food, medical care, hope, and second chances.</p>
+        <div class="impact-quote">We don't just raise awareness. We implement solutions.</div>
         <div class="focus-grid">
           <h4>Our Focus Areas</h4>
           <div class="focus-items">
-            <div class="focus-item">Community development & Upliftment</div>
-            <div class="focus-item">Medical Care & Health Support</div>
-            <div class="focus-item">Prison reforms and Inmates Welfare</div>
-            <div class="focus-item">Community Welfare and Second Chances</div>
-            <div class="focus-item">Youth leadership</div>
-            <div class="focus-item">Change agent</div>
+            <div class="focus-item">Community Development &amp; Upliftment</div>
+            <div class="focus-item">Medical Care &amp; Health Support</div>
+            <div class="focus-item">Prison Reforms &amp; Inmates Welfare</div>
+            <div class="focus-item">Community Welfare &amp; Second Chances</div>
+            <div class="focus-item">Youth Leadership</div>
+            <div class="focus-item">Change Agent</div>
           </div>
         </div>
       </section>
 
-      <!-- OUR IMPACT -->
+      <!-- IMPACT -->
       <section class="section" id="impact">
-        <div class="section-header">
-          <div class="section-label"><span>OUR IMPACT</span></div>
-          <h2>Measurable Change, Real Lives</h2>
-        </div>
+        <div class="section-label"><span>OUR IMPACT</span></div>
+        <h2>Measurable Change, Real Lives</h2>
         <div class="recognition-badge">
-          <p>
-            <strong>Recognized by SME 100 Nigeria (2018)</strong> for invaluable contributions 
-            to active citizenry and engagement in Nigeria. Our pragmatic, strategic approach 
-            has touched lives across Lagos.
-          </p>
+          <p><strong>Recognized by SME 100 Nigeria (2018)</strong> for invaluable contributions to active citizenry and engagement in Nigeria. Our pragmatic, strategic approach has touched lives across Lagos.</p>
         </div>
         <div class="impact-stats">
-          <div class="stat-card">
-            <div class="stat-number">30+</div>
-            <div class="stat-label">Orphanages visited every end of the month since 2013</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">20+</div>
-            <div class="stat-label">Communities transformed with aid</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1500+</div>
-            <div class="stat-label">Prison Inmates empowered and Motivated</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1000+</div>
-            <div class="stat-label">Youth volunteers equipped with leadership and change advocacy mindset</div>
-          </div>
+          <div class="stat-card"><div class="stat-number">30+</div><div class="stat-label">Orphanages visited every end of the month since 2013</div></div>
+          <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label">Communities transformed with aid</div></div>
+          <div class="stat-card"><div class="stat-number">1,500+</div><div class="stat-label">Prison inmates empowered and motivated</div></div>
+          <div class="stat-card"><div class="stat-number">1,000+</div><div class="stat-label">Youth volunteers equipped with leadership and change advocacy mindset</div></div>
         </div>
-        <p class="section-intro">
-          <strong>What makes us different?</strong> We're a leadership incubator disguised as a charity. 
-          Every volunteer leads projects, builds skills, and becomes a change agent. We've pioneered 
-          prison reform initiatives bringing dignity to inmates, launched health support & mental health advocacy 
-          supporting those in need, and created sustainable community development programs.
-        </p>
+        <p class="section-intro"><strong>What makes us different?</strong> We're a leadership incubator disguised as a charity. Every volunteer leads projects, builds skills, and becomes a change agent. We've pioneered prison reform initiatives bringing dignity to inmates, launched health support &amp; mental health advocacy, and created sustainable community development programs.</p>
       </section>
 
       <!-- PROGRAMS -->
       <section class="section" id="programs">
-        <div class="section-header">
-          <div class="section-label"><span>OUR PROGRAMS</span></div>
-          <h2>Making Impact Every Month</h2>
-        </div>
+        <div class="section-label"><span>OUR PROGRAMS</span></div>
+        <h2>Making Impact Every Month</h2>
         <div class="programs-grid">
           <a href="/eotm-charity-series.html" class="program-card">
             <div class="program-number">Program 01</div>
             <h3>End of the Month Outreach</h3>
-            <p class="program-description">
-              EHI's signature monthly community support initiative — orphanage visits, 
-              community engagement, and welfare support every end of month.
-            </p>
+            <p class="program-description">EHI's signature monthly community support initiative — orphanage visits, community engagement, and welfare support every end of month.</p>
             <span class="program-link">Explore EOTM</span>
           </a>
           <a href="/charity-series.html" class="program-card">
             <div class="program-number">Program 02</div>
             <h3>The Charity Series</h3>
-            <p class="program-description">
-              EHI's flagship program responding to urgent needs with strategic, 
-              compassionate action — healthcare, food, and community upliftment.
-            </p>
+            <p class="program-description">EHI's flagship program responding to urgent needs with strategic, compassionate action — healthcare, food, and community upliftment.</p>
             <span class="program-link">Explore Charity Series</span>
           </a>
         </div>
       </section>
 
-      <!-- CTA -->
+      <!-- FOUNDER -->
+      <section class="section" id="founder">
+        <div class="section-label"><span>MEET OUR FOUNDER</span></div>
+        <h2>The Visionary Behind the Movement</h2>
+        <div class="founder-full">
+          <div class="founder-full-inner">
+            <div class="founder-photo-col">
+              <div>
+                <div class="founder-photo-ring">
+                  <img src="mr. dare.jpg" alt="Dare Asobele – Founder" onerror="this.src='https://placehold.co/136x136/1a4530/e89c4a?text=DA'; this.onerror=null;" />
+                </div>
+                <div class="founder-name-main">Dare Asobele</div>
+                <div class="founder-name-title">Founder &amp; Visionary</div>
+              </div>
+            </div>
+            <div class="founder-info-col">
+              <div class="founder-credentials">
+                <span class="credential-tag">Lawyer</span>
+                <span class="credential-tag">Project Manager</span>
+                <span class="credential-tag">Change Catalyst</span>
+              </div>
+              <p class="founder-bio">Timothy-Asobele Emmanuel Dare, popularly known as Dare Asobele, founded Executives Helping Initiative in 2013 while studying law at the University of Lagos. What sparked this journey? A moment of anger transformed into action — after visiting an orphanage and realizing good intentions were not enough. Moved by legal icons like Chief Gani Fawehinmi and Justice Chukwudifu Oputa, he brought together five friends and turned compassion into what would grow into a national movement.</p>
+              <div class="founder-achievements">
+                <p><strong>Called to the Nigerian Bar (2015)</strong> | PMP® Certified</p>
+                <p>Also founded <strong>ASADS</strong> (Anti-Suicide and Depression Squad)</p>
+              </div>
+              <blockquote class="founder-quote">The world just needs people willing to take action.</blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="section" id="gallery">
+        <div class="section-label"><span>OUR GALLERY</span></div>
+        <h2>Moments of Impact</h2>
+        <div class="gallery-section">
+          <div class="gallery-section-header">
+            <span class="gallery-label-text">📸 Photo Gallery</span>
+            <span class="gallery-count-badge" id="gallery-count">Loading…</span>
+          </div>
+          <div class="gallery-grid" id="gallery-grid">
+            <div class="gallery-item" data-src="ehi_charity series.jpg" onclick="openLightbox(this)"><img src="ehi_charity series.jpg" alt="Community Outreach" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="orphanage_visitation.jpg" data-caption="Orphanage Visit" onclick="openLightbox(this)"><img src="orphanage_visitation.jpg" alt="Orphanage Visit" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="orphanage_visitation2.jpg" data-caption="Orphanage Visit 2" onclick="openLightbox(this)"><img src="orphanage_visitation2.jpg" alt="Orphanage Visit 2" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="photo3.jpg" data-caption="Prison Outreach" onclick="openLightbox(this)"><img src="photo3.jpg" alt="Prison Outreach" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="ehi_charity series 2.jpg" onclick="openLightbox(this)"><img src="ehi_charity series 2.jpg" alt="Community Outreach 2" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="photo4.jpg" data-caption="Health Support" onclick="openLightbox(this)"><img src="photo4.jpg" alt="Health Support" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="photo5.jpg" data-caption="Youth Leadership" onclick="openLightbox(this)"><img src="photo5.jpg" alt="Youth Leadership" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+            <div class="gallery-item" data-src="photo 6.jpg" data-caption="Community Impact" onclick="openLightbox(this)"><img src="photo 6.jpg" alt="Community Impact" onerror="this.closest('.gallery-item').classList.add('gallery-empty');this.closest('.gallery-item').removeAttribute('onclick');this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';"/></div>
+          </div>
+          <div class="gallery-section-footer"><p class="gallery-hint">We do it by action, not by words.</p></div>
+        </div>
+      </section>
+
+      <!-- CTA / CONTACT -->
       <section class="cta-section" id="contact">
         <h2>Join the Movement</h2>
-        <p>
-          Your support ensures that we continue to bring hope, joy, and meaningful 
-          change to communities who need it most. Every contribution makes a real difference.<br>
-          OUR MISSION: Unleash the potential of Nigerian youth to solve societal challenges, 
-          improve community health, and advance sustainable development—one compassionate act at a time.<br>
-          OUR VISION: Love. Integrity. Passion for humanity. Care for volunteers. Excellence.
-        </p>
+        <p>Your support ensures we continue bringing hope, joy, and meaningful change to communities who need it most. Every contribution makes a real difference.<br><br>
+        <strong style="color:rgba(255,255,255,.92);">Our Mission:</strong> Unleash the potential of Nigerian youth to solve societal challenges, improve community health, and advance sustainable development — one compassionate act at a time.<br><br>
+        <strong style="color:rgba(255,255,255,.92);">Our Vision:</strong> Love. Integrity. Passion for humanity. Care for volunteers. Excellence.</p>
         <div class="cta-actions">
           <a href="#donate" class="btn btn-primary">Donate Now</a>
           <a href="mailto:executivesinitiative@gmail.com" class="btn btn-secondary">Become a Volunteer</a>
         </div>
       </section>
 
-    </div>
+    </div><!-- /content-area -->
 
-    <!-- SIDEBAR / FOUNDER CARD -->
-    <aside class="sidebar" id="founder">
-      <div class="founder-card">
-        <div class="founder-header">
-          <span class="founder-label">MEET OUR FOUNDER</span>
-        </div>
-
-        <!-- ★ FOUNDER PHOTO ★ -->
-        <div class="founder-photo-wrap">
-          <div class="founder-photo-ring">
-            <img
-              src="mr. dare.jpg"
-              alt="Dare Asobele – Founder, Executives Helping Initiative"
-              onerror="this.src='https://placehold.co/130x130/1a4530/e89c4a?text=DA'; this.onerror=null;"
-            />
-            <div class="founder-photo-glow"></div>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <h3>Executives Helping Initiative</h3>
+            <p>A youth-led movement of 1,000+ volunteers fighting poverty through strategic action, compassionate outreach, and unwavering commitment to communities across Nigeria.</p>
+            <div class="social-links">
+              <a href="https://www.instagram.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="https://x.com/Executivesinc" target="_blank" class="social-link" aria-label="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a href="https://www.facebook.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+              <a href="https://ng.linkedin.com/company/executivesinitiative" target="_blank" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <div class="footer-links">
+              <a href="#about">About Us</a>
+              <a href="#programs">Our Programs</a>
+              <a href="#impact">Our Impact</a>
+              <a href="/eotm-charity-series.html">EOTM Outreach</a>
+              <a href="/charity-series.html">Charity Series</a>
+              <a href="https://www.executivesinitiative.com" target="_blank">Main Website</a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Us</h4>
+            <div class="contact-info">
+              <div class="contact-item"><span>📞</span><a href="tel:+2347087759673">+234 708 775 9673</a></div>
+              <div class="contact-item"><span>✉️</span><a href="mailto:executivesinitiative@gmail.com">executivesinitiative@gmail.com</a></div>
+              <div class="contact-item"><span>🌐</span><a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a></div>
+              <div class="contact-item"><span>📍</span><span>Lagos, Nigeria</span></div>
+            </div>
           </div>
         </div>
-        <!-- ★ END FOUNDER PHOTO ★ -->
-
-        <div class="founder-content">
-          <h3>Dare Asobele</h3>
-          <p class="founder-title">Founder & Visionary</p>
-          
-          <div class="founder-credentials">
-            <span class="credential-tag">Lawyer</span>
-            <span class="credential-tag">Project Manager</span>
-            <span class="credential-tag">Change Catalyst</span>
-          </div>
-          
-          <p class="founder-bio">
-            Timothy-Asobele Emmanuel Dare popularly known  as Dare Asobele, founded 
-            Executives Helping Initiative in 2013, while studying law at the University of Lagos. 
-            What sparked this journey? A moment of  Anger that was transformed into action. After visiting an orphanage and 
-            realizing good intentions were not enough. Moved by this, legal icons like  Chief Gani Fawehinmi 
-            and Justice Chukwudifu Oputa, he brought together five friends and turned compassion into what would grow into a national movement.
-          </p>
-          
-          <div class="founder-achievements">
-            <p><strong>Called to the Nigerian Bar (2015)</strong> | PMP® Certified</p>
-            <p>Also founded <strong>ASADS</strong> (Anti-Suicide and Depression Squad)</p>
-          </div>
-          
-          <blockquote class="founder-quote">
-            The world just needs people willing to take action.
-          </blockquote>
-        </div>
+        <div class="footer-bottom"><p>© 2026 Executives Helping Initiative. All rights reserved. CAC/IT/NO 108431</p></div>
       </div>
+    </footer>
 
-      <!-- ★ GALLERY CARD ★ -->
-      <div class="gallery-card" id="gallery">
-        <div class="gallery-card-header">
-          <span class="gallery-label">📸 Our Gallery</span>
-          <span class="gallery-count" id="gallery-count">6 photos</span>
-        </div>
-
-        <div class="gallery-grid" id="gallery-grid">
-         
-          <!-- SLOT 1 -->
-          <div class="gallery-item" data-src="ehi_charity series.jpg"  onclick="openLightbox(this)">
-            <img src="ehi_charity series.jpg" alt="Community Outreach"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- SLOT 2 -->
-          <div class="gallery-item" data-src="orphanage_visitation.jpg" data-caption="Orphanage Visit" onclick="openLightbox(this)">
-            <img src="orphanage_visitation.jpg" alt="Orphanage Visit"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-          <div class="gallery-item" data-src="orphanage_visitation2.jpg" data-caption="Orphanage Visit" onclick="openLightbox(this)">
-            <img src="orphanage_visitation2.jpg" alt="Orphanage Visit"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- SLOT 3 -->
-          <div class="gallery-item" data-src="photo3.jpg" data-caption="Prison Outreach" onclick="openLightbox(this)">
-            <img src="photo3.jpg" alt="Prison Outreach"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-          <div class="gallery-item" data-src="ehi_charity series 2.jpg"  onclick="openLightbox(this)">
-            <img src="ehi_charity series 2.jpg" alt="Community Outreach"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- SLOT 4 -->
-          <div class="gallery-item" data-src="photo4.jpg" data-caption="Health Support" onclick="openLightbox(this)">
-            <img src="photo4.jpg" alt="Health Support"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- SLOT 5 -->
-          <div class="gallery-item" data-src="photo5.jpg" data-caption="Youth Leadership" onclick="openLightbox(this)">
-            <img src="photo5.jpg" alt="Youth Leadership"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- SLOT 6 -->
-          <div class="gallery-item" data-src="photo 6.jpg" data-caption="Community Impact" onclick="openLightbox(this)">
-            <img src="photo 6.jpg" alt="Community Impact"
-              onerror="this.closest('.gallery-item').classList.add('gallery-empty'); this.closest('.gallery-item').removeAttribute('onclick'); this.closest('.gallery-item').innerHTML='<span class=\'gallery-empty-icon\'>📷</span><span class=\'gallery-empty-text\'>Add photo</span>';" />
-          </div>
-
-          <!-- Add more slots by copying any block above ↑ -->
-        </div>
-
-        <div class="gallery-footer">
-          <p class="gallery-hint">
-           We do it by action not by words.
-          </p>
-        </div>
-      </div>
-      <!-- ★ END GALLERY CARD ★ -->
-
-    </aside>
-  </div>
+  </div><!-- /page-wrap -->
 
   <!-- LIGHTBOX -->
   <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnOverlay(event)">
@@ -1788,179 +585,83 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <h3>Executives Helping Initiative</h3>
-          <p>
-            A youth-led movement of 1,000+ volunteers fighting poverty through strategic 
-            action, compassionate outreach, and unwavering commitment to communities 
-            across Nigeria.
-          </p>
-          <div class="social-links">
-            <a href="https://www.instagram.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Instagram">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="2" width="20" height="20" rx="5"/>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-              </svg>
-            </a>
-            <a href="https://x.com/Executivesinc" target="_blank" class="social-link" aria-label="Twitter/X">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            <a href="https://www.facebook.com/executivesinitiative/" target="_blank" class="social-link" aria-label="Facebook">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-              </svg>
-            </a>
-            <a href="https://ng.linkedin.com/company/executivesinitiative" target="_blank" class="social-link" aria-label="LinkedIn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect x="2" y="9" width="4" height="12"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Quick Links</h4>
-          <div class="footer-links">
-            <a href="#about">About Us</a>
-            <a href="#programs">Our Programs</a>
-            <a href="#impact">Our Impact</a>
-            <a href="/eotm-charity-series.html">EOTM Outreach</a>
-            <a href="/charity-series.html">Charity Series</a>
-            <a href="https://www.executivesinitiative.com" target="_blank">Main Website</a>
-          </div>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Contact Us</h4>
-          <div class="contact-info">
-            <div class="contact-item">
-              <span>📞</span>
-              <a href="tel:+2347087759673">+234 708 775 9673</a>
-            </div>
-            <div class="contact-item">
-              <span>✉️</span>
-              <a href="mailto:executivesinitiative@gmail.com">executivesinitiative@gmail.com</a>
-            </div>
-            <div class="contact-item">
-              <span>🌐</span>
-              <a href="https://www.executivesinitiative.com" target="_blank">executivesinitiative.com</a>
-            </div>
-            <div class="contact-item">
-              <span>📍</span>
-              <span>Lagos, Nigeria</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>© 2026 Executives Helping Initiative. All rights reserved. CAC/IT/NO 108431</p>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    window.addEventListener('scroll', function() {
-      const header = document.querySelector('header');
-      header.classList.toggle('scrolled', window.scrollY > 50);
+    // Topbar scroll shadow
+    window.addEventListener('scroll', () => {
+      document.getElementById('topbar').classList.toggle('scrolled', window.scrollY > 40);
+      updateActiveNav();
     });
 
-    // ── Gallery photo counter ──────────────────────────────────────────
-    function updateGalleryCount() {
-      const filled = document.querySelectorAll('.gallery-item:not(.gallery-empty)').length;
-      const countEl = document.getElementById('gallery-count');
-      if (countEl) countEl.textContent = filled + (filled === 1 ? ' photo' : ' photos');
-    }
-    // Run once images have had a chance to load / error
-    window.addEventListener('load', updateGalleryCount);
-    // Also observe DOM changes so the count updates when onerror fires
-    new MutationObserver(updateGalleryCount)
-      .observe(document.getElementById('gallery-grid') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    // Sidebar toggle
+    document.getElementById('sidebarToggle').addEventListener('click', () => document.body.classList.toggle('nav-open'));
+    document.getElementById('navOverlay').addEventListener('click', () => document.body.classList.remove('nav-open'));
 
-    // ── Lightbox ──────────────────────────────────────────────────────
-    let lightboxItems = [];
-    let lightboxIndex = 0;
-
-    function openLightbox(el) {
-      // Build list of all filled (non-empty) gallery items
-      lightboxItems = Array.from(document.querySelectorAll('.gallery-item:not(.gallery-empty)'));
-      lightboxIndex = lightboxItems.indexOf(el);
-      showLightboxSlide(lightboxIndex);
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function showLightboxSlide(idx) {
-      const item = lightboxItems[idx];
-      if (!item) return;
-      document.getElementById('lightbox-img').src = item.dataset.src || '';
-      document.getElementById('lightbox-img').alt = item.dataset.caption || '';
-      document.getElementById('lightbox-caption').textContent = item.dataset.caption || '';
-      // Hide nav arrows if only one photo
-      document.querySelector('.lightbox-prev').style.display = lightboxItems.length > 1 ? 'flex' : 'none';
-      document.querySelector('.lightbox-next').style.display = lightboxItems.length > 1 ? 'flex' : 'none';
-    }
-
-    function shiftLightbox(dir) {
-      lightboxIndex = (lightboxIndex + dir + lightboxItems.length) % lightboxItems.length;
-      showLightboxSlide(lightboxIndex);
-    }
-
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closeLightboxOnOverlay(e) {
-      if (e.target === document.getElementById('lightbox')) closeLightbox();
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      const lb = document.getElementById('lightbox');
-      if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeLightbox();
-      if (e.key === 'ArrowLeft')   shiftLightbox(-1);
-      if (e.key === 'ArrowRight')  shiftLightbox(1);
-    });
-
-    function toggleMenu() {
-      document.querySelector('.header-nav').classList.toggle('active');
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+    // Smooth scroll + close mobile nav on link click
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        if (href !== '#') {
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            document.querySelector('.header-nav').classList.remove('active');
-          }
+        if (href === '#' || href === '#donate') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const hh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 68;
+          window.scrollTo({ top: target.offsetTop - hh, behavior: 'smooth' });
+          if (window.innerWidth < 1100) document.body.classList.remove('nav-open');
         }
       });
     });
 
-    document.addEventListener('click', function(event) {
-      const nav = document.querySelector('.header-nav');
-      const menuBtn = document.querySelector('.mobile-menu-btn');
-      if (nav.classList.contains('active') && 
-          !nav.contains(event.target) && 
-          !menuBtn.contains(event.target)) {
-        nav.classList.remove('active');
-      }
+    // Active nav highlight on scroll
+    const sections = ['about','impact','programs','founder','gallery','contact'];
+    function updateActiveNav() {
+      const sy = window.scrollY;
+      let current = sections[0];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop - 120 <= sy) current = id;
+      });
+      document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+        link.classList.toggle('active', link.dataset.section === current);
+      });
+    }
+    window.addEventListener('load', updateActiveNav);
+
+    // Gallery count
+    function updateGalleryCount() {
+      const n = document.querySelectorAll('#gallery-grid .gallery-item:not(.gallery-empty)').length;
+      const el = document.getElementById('gallery-count');
+      if (el) el.textContent = n + (n === 1 ? ' photo' : ' photos');
+    }
+    window.addEventListener('load', updateGalleryCount);
+    new MutationObserver(updateGalleryCount).observe(document.getElementById('gallery-grid') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+
+    // Lightbox
+    let lbItems = [], lbIdx = 0;
+    function openLightbox(el) {
+      lbItems = Array.from(document.querySelectorAll('#gallery-grid .gallery-item:not(.gallery-empty)'));
+      lbIdx = lbItems.indexOf(el);
+      showSlide(lbIdx);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function showSlide(i) {
+      const item = lbItems[i]; if (!item) return;
+      document.getElementById('lightbox-img').src = item.dataset.src || '';
+      document.getElementById('lightbox-img').alt = item.dataset.caption || '';
+      document.getElementById('lightbox-caption').textContent = item.dataset.caption || '';
+      const many = lbItems.length > 1;
+      document.querySelector('.lightbox-prev').style.display = many ? 'flex' : 'none';
+      document.querySelector('.lightbox-next').style.display = many ? 'flex' : 'none';
+    }
+    function shiftLightbox(d) { lbIdx = (lbIdx + d + lbItems.length) % lbItems.length; showSlide(lbIdx); }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    function closeLightboxOnOverlay(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') shiftLightbox(-1);
+      if (e.key === 'ArrowRight') shiftLightbox(1);
     });
   </script>
-
 </body>
 </html>
