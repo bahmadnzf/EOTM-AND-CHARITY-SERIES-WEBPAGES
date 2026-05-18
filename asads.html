@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ASADS — Anti Suicide & Depression Squad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg0: #080B10;
+    --bg1: #0D1219;
+    --bg2: #131B27;
+    --bg3: #1A2333;
+    --gold: #E8A63C;
+    --gold-dim: rgba(232,166,60,0.12);
+    --teal: #36C9AE;
+    --teal-dim: rgba(54,201,174,0.1);
+    --rose: #E87070;
+    --text0: #F2EDE5;
+    --text1: #A8ADB8;
+    --text2: #5E6578;
+    --border: rgba(255,255,255,0.06);
+    --border-gold: rgba(232,166,60,0.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg0);
+    color: var(--text0);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(232,166,60,0.25); color: var(--text0); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 4vw;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8,11,16,0.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.4s;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem; font-weight: 800;
+    letter-spacing: 0.06em; color: var(--text0);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), #C97B20);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; color: #080B10;
+    letter-spacing: 0;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--text1); text-decoration: none; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 0.55rem 1.4rem; border-radius: 50px;
+    background: var(--gold); color: #080B10;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: #C97B20; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 4vw 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 60% 70% at 70% 40%, rgba(54,201,174,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 20% 80%, rgba(232,166,60,0.07) 0%, transparent 55%);
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(70px); pointer-events: none; z-index: 0;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 500px; height: 500px; top: -100px; right: -80px; background: rgba(54,201,174,0.09); animation-duration: 16s; }
+  .orb2 { width: 380px; height: 380px; bottom: 0px; left: -60px; background: rgba(232,166,60,0.09); animation-duration: 12s; animation-delay: -4s; }
+  .orb3 { width: 250px; height: 250px; top: 40%; right: 25%; background: rgba(232,112,112,0.05); animation-duration: 10s; animation-delay: -7s; }
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,-30px) scale(1.1); } }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 1400px; width: 100%; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Syne', sans-serif; font-size: 0.72rem;
+    font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 2rem;
+    padding: 0.4rem 1rem; border-radius: 50px;
+    border: 1px solid rgba(54,201,174,0.25);
+    background: rgba(54,201,174,0.06);
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    font-weight: 300; line-height: 1.0;
+    color: var(--text0);
+    margin-bottom: 0.5rem;
+    opacity: 0; animation: fadeUp 1s 0.4s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-title-accent {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    font-weight: 600; line-height: 1.0;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(242,237,229,0.25);
+    margin-bottom: 2rem; display: block;
+    opacity: 0; animation: fadeUp 1s 0.55s forwards;
+  }
+  .hero-sub {
+    max-width: 540px;
+    font-size: 1.05rem; font-weight: 300;
+    color: var(--text1); line-height: 1.8; margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-sub strong { color: var(--text0); font-weight: 400; }
+  .hero-actions {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    opacity: 0; animation: fadeUp 1s 0.85s forwards;
+  }
+  .btn-primary {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none;
+    background: var(--gold); color: #080B10;
+    transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--gold);
+  }
+  .btn-primary:hover { background: transparent; color: var(--gold); transform: translateY(-2px); }
+  .btn-secondary {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none;
+    background: transparent; color: var(--text0);
+    border: 1px solid var(--border);
+    transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { border-color: var(--text1); transform: translateY(-2px); }
+
+  .hero-scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--text2); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0; animation: fadeIn 1s 1.5s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--text2), transparent);
+    animation: scrollDrop 2s ease-in-out infinite;
+  }
+  @keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  /* ─── STATS BAR ─── */
+  #stats {
+    background: var(--bg1);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 4vw;
+  }
+  .stats-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem; text-align: center;
+  }
+  .stat-item { padding: 1rem; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 600; line-height: 1;
+    color: var(--gold); margin-bottom: 0.4rem;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text1);
+  }
+  .stat-divider {
+    width: 1px; background: var(--border);
+    align-self: stretch; margin: auto 0;
+    display: none;
+  }
+  @media(min-width:768px) { .stat-divider { display: block; } }
+
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 7rem 4vw; }
+  .section-inner { max-width: 1400px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; max-width: 60px;
+    background: linear-gradient(to right, var(--teal), transparent);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.15; color: var(--text0);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-body {
+    font-size: 1rem; font-weight: 300;
+    color: var(--text1); max-width: 620px; line-height: 1.85;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--bg1); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  @media(max-width:900px) { .about-grid { grid-template-columns: 1fr; gap: 3rem; } }
+  .about-text { }
+  .about-visual {
+    position: relative;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 2.5rem;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--teal), var(--gold));
+  }
+  .value-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;
+  }
+  .value-chip {
+    padding: 0.8rem 1rem; border-radius: 10px;
+    background: var(--bg3); border: 1px solid var(--border);
+    font-size: 0.85rem; font-weight: 400; color: var(--text0);
+    display: flex; align-items: center; gap: 8px;
+    transition: border-color 0.3s;
+  }
+  .value-chip:hover { border-color: var(--border-gold); }
+  .value-chip::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+  }
+  .vm-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem; margin-bottom: 1rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .vm-card:hover { border-color: var(--border-gold); transform: translateX(4px); }
+  .vm-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--gold);
+  }
+  .vm-tag {
+    font-family: 'Syne', sans-serif; font-size: 0.65rem;
+    font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .vm-text { font-size: 0.95rem; color: var(--text1); font-weight: 300; line-height: 1.7; }
+
+  /* ─── INTERESTS ─── */
+  #interests { background: var(--bg0); }
+  .interests-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .interest-card {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+    transition: all 0.35s; cursor: default; position: relative; overflow: hidden;
+  }
+  .interest-card::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(135deg, rgba(232,166,60,0.05), transparent);
+    opacity: 0; transition: opacity 0.35s;
+  }
+  .interest-card:hover { border-color: var(--border-gold); transform: translateY(-4px); }
+  .interest-card:hover::after { opacity: 1; }
+  .interest-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--gold-dim); border: 1px solid var(--border-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.2rem;
+  }
+  .interest-title {
+    font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+    color: var(--text0); margin-bottom: 0.5rem;
+  }
+  .interest-body { font-size: 0.85rem; color: var(--text1); font-weight: 300; line-height: 1.7; }
+
+  /* ─── DEPARTMENTS ─── */
+  #departments { background: var(--bg1); }
+  .dept-intro {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: start; margin-bottom: 4rem;
+  }
+  @media(max-width:900px) { .dept-intro { grid-template-columns: 1fr; gap: 2rem; } }
+  .dept-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+  .dept-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem 1.8rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: all 0.3s; cursor: default;
+  }
+  .dept-card:hover { border-color: rgba(54,201,174,0.3); transform: translateY(-3px); background: var(--bg3); }
+  .dept-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+    font-weight: 300; color: var(--bg3); line-height: 1;
+    min-width: 36px; transition: color 0.3s;
+  }
+  .dept-card:hover .dept-num { color: var(--teal); }
+  .dept-info {}
+  .dept-name {
+    font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+    color: var(--text0); margin-bottom: 0.4rem;
+  }
+  .dept-desc { font-size: 0.8rem; color: var(--text2); font-weight: 300; line-height: 1.6; }
+
+  /* ─── MEMBERSHIP ─── */
+  #membership { background: var(--bg0); }
+  .membership-layout {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start;
+  }
+  @media(max-width:900px) { .membership-layout { grid-template-columns: 1fr; gap: 3rem; } }
+  .member-card {
+    background: var(--bg1); border: 1px solid var(--border-gold);
+    border-radius: 24px; padding: 3rem; position: relative; overflow: hidden;
+  }
+  .member-card::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,166,60,0.15), transparent);
+  }
+  .member-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 600; color: var(--gold);
+    line-height: 1; margin: 1.5rem 0 0.3rem;
+  }
+  .member-price span { font-size: 1.8rem; font-weight: 300; }
+  .member-period { font-size: 0.8rem; color: var(--text1); margin-bottom: 2rem; }
+  .member-benefits { list-style: none; margin-bottom: 2.5rem; }
+  .member-benefits li {
+    padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.9rem; color: var(--text1); font-weight: 300;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .member-benefits li::before {
+    content: '✓'; color: var(--teal); font-size: 0.8rem; flex-shrink: 0;
+  }
+  .member-note {
+    font-size: 0.78rem; color: var(--text2); line-height: 1.6;
+    padding: 1rem 1.2rem; background: var(--bg2); border-radius: 10px;
+    border-left: 3px solid var(--border);
+  }
+  .requirements-list { list-style: none; }
+  .requirements-list li {
+    display: flex; gap: 1rem;
+    padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.9rem; color: var(--text1); font-weight: 300; line-height: 1.7;
+    align-items: flex-start;
+  }
+  .req-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    color: var(--text2); line-height: 1; min-width: 28px;
+  }
+
+  /* ─── ACTIVITIES ─── */
+  #activities { background: var(--bg1); }
+  .activities-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .activity-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .activity-card:hover { border-color: var(--border-gold); transform: translateY(-4px); }
+  .activity-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); margin-bottom: 1.2rem;
+    box-shadow: 0 0 12px rgba(232,166,60,0.4);
+  }
+  .activity-name {
+    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--text0); margin-bottom: 0.4rem;
+  }
+  .activity-desc { font-size: 0.82rem; color: var(--text1); font-weight: 300; line-height: 1.7; }
+
+  /* ─── FORUMS ─── */
+  #forums { background: var(--bg0); }
+  .forums-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  @media(max-width:900px) { .forums-layout { grid-template-columns: 1fr; gap: 3rem; } }
+  .forum-badges {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0;
+  }
+  .forum-badge {
+    padding: 0.6rem 1.4rem; border-radius: 50px;
+    background: var(--bg2); border: 1px solid var(--border);
+    font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 600;
+    color: var(--text0); transition: all 0.3s;
+  }
+  .forum-badge:hover { border-color: var(--border-gold); color: var(--gold); }
+  .rules-list { list-style: none; }
+  .rules-list li {
+    padding: 1rem 1.2rem; margin-bottom: 0.6rem;
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: 10px; font-size: 0.88rem; color: var(--text1);
+    font-weight: 300; line-height: 1.6;
+    display: flex; gap: 10px; align-items: flex-start;
+    transition: border-color 0.3s;
+  }
+  .rules-list li:hover { border-color: rgba(54,201,174,0.2); }
+  .rules-list li::before {
+    content: '—'; color: var(--teal); flex-shrink: 0;
+  }
+
+  /* ─── CTA BAND ─── */
+  #cta {
+    padding: 8rem 4vw;
+    background: var(--bg1);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 100% at 50% 50%, rgba(232,166,60,0.07), transparent);
+  }
+  .cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300; line-height: 1.1; color: var(--text0);
+    margin-bottom: 1.5rem;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-body { font-size: 1rem; color: var(--text1); font-weight: 300; margin-bottom: 2.5rem; }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 5rem 4vw;
+    background: var(--bg0);
+    border-top: 1px solid var(--border);
+  }
+  .contact-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 2fr; gap: 5rem;
+    align-items: start;
+  }
+  @media(max-width:900px) { .contact-inner { grid-template-columns: 1fr; gap: 3rem; } }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  @media(max-width:600px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-item {
+    padding: 1.2rem 1.4rem; background: var(--bg1);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: border-color 0.3s;
+  }
+  .contact-item:hover { border-color: var(--border-gold); }
+  .contact-label {
+    font-family: 'Syne', sans-serif; font-size: 0.62rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text2); margin-bottom: 0.4rem;
+  }
+  .contact-value { font-size: 0.85rem; color: var(--text0); word-break: break-all; }
+  .contact-value a { color: var(--teal); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+  .social-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .social-link {
+    padding: 0.5rem 1.1rem; border-radius: 50px;
+    background: var(--bg1); border: 1px solid var(--border);
+    font-size: 0.78rem; color: var(--text1); text-decoration: none;
+    font-family: 'Syne', sans-serif; font-weight: 600;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--border-gold); color: var(--gold); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 4vw; background: var(--bg0);
+    border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.78rem; color: var(--text2); }
+  .footer-mission {
+    font-size: 0.78rem; color: var(--text2);
+    font-style: italic; max-width: 400px; text-align: right;
+  }
+
+  /* ─── MOBILE ─── */
+  @media(max-width:768px) {
+    nav { padding: 0.75rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 100px 1.5rem 60px; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-mission { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-icon">AS</span>
+    ASADS
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#departments">Departments</a>
+    <a href="#membership">Join</a>
+    <a href="#activities">Programs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="mailto:antisuicideanddepressionsquad@gmail.com" class="nav-cta">Reach Out</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Nigeria's Mental Health Vanguard — Est. 2018</div>
+    <h1 class="hero-title">Breaking the silence<br>around <em>depression</em></h1>
+    <span class="hero-title-accent">&amp; suicide.</span>
+    <p class="hero-sub">
+      ASADS equips individuals, families, and communities with the knowledge, tools,
+      and <strong>human connection</strong> to understand, recognize, and overcome
+      mental health challenges across Nigeria and Africa.
+    </p>
+    <div class="hero-actions">
+      <a href="#membership" class="btn-primary">Become a Member ↗</a>
+      <a href="#about" class="btn-secondary">Learn Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <span class="stat-number" data-count="2018">2018</span>
+      <span class="stat-label">Year Founded</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item reveal" style="transition-delay:0.1s">
+      <span class="stat-number" data-count="9">9+</span>
+      <span class="stat-label">Founding Volunteers</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item reveal" style="transition-delay:0.2s">
+      <span class="stat-number" data-count="13">13</span>
+      <span class="stat-label">Active Departments</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item reveal" style="transition-delay:0.3s">
+      <span class="stat-number" data-count="4">4</span>
+      <span class="stat-label">Community Forums</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item reveal" style="transition-delay:0.4s">
+      <span class="stat-number">50%</span>
+      <span class="stat-label">Reduction Goal by 2030</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Born from a <em>calling</em> to heal</h2>
+        <p class="section-body">
+          Founded in 2018 by Mr. Dare Asobele under the Executives Helping Initiative,
+          ASADS began with just 9 volunteers and a bold vision — to dramatically reduce
+          depression and suicide in Nigeria. Today, it operates as a structured, multi-department
+          organization powered by trained mental health advocates, professional therapists,
+          and passionate listeners committed to the well-being of every Nigerian.
+        </p>
+        <p class="section-body" style="margin-top:1rem">
+          Depression is not a weakness. Suicide is not a solution. With awareness, training,
+          and reach-out programs, ASADS walks alongside those who are struggling — until they find light.
+        </p>
+        <div style="margin-top:2.5rem;">
+          <div class="vm-card reveal">
+            <div class="vm-tag">Vision 2030</div>
+            <div class="vm-text">Significantly reducing depression, suicide, and mental health issues in Nigeria by 50% before 2030.</div>
+          </div>
+          <div class="vm-card reveal" style="transition-delay:0.15s">
+            <div class="vm-tag">Mission</div>
+            <div class="vm-text">Reaching as many people as possible through awareness campaigns, training, and workshops — encouraging help-seeking and reducing stigma.</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal" style="transition-delay:0.2s">
+        <div class="section-label">Our Core Values</div>
+        <p style="font-size:0.9rem;color:var(--text1);font-weight:300;line-height:1.7;margin-bottom:1rem">
+          The principles that guide every interaction, decision, and program within ASADS.
+        </p>
+        <div class="value-grid">
+          <div class="value-chip">Love</div>
+          <div class="value-chip">Integrity</div>
+          <div class="value-chip">Passion for Humanity</div>
+          <div class="value-chip">Care for Volunteers</div>
+          <div class="value-chip">Excellence</div>
+          <div class="value-chip">Service</div>
+        </div>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--bg3);border-radius:12px;border:1px solid var(--border);">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--text0);line-height:1.6">
+            "Our Focus is to promote the awareness of mental health with a pivotal focus on depression and suicide."
+          </p>
+          <p style="font-size:0.75rem;color:var(--text2);margin-top:1rem;letter-spacing:0.08em;text-transform:uppercase;">— ASADS Foundation Statement</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section id="interests">
+  <div class="section-inner">
+    <div class="section-label">What We Champion</div>
+    <h2 class="section-title reveal">Areas of <em>focused</em> impact</h2>
+    <div class="interests-grid">
+      <div class="interest-card reveal">
+        <div class="interest-icon">🧠</div>
+        <div class="interest-title">Mental Health Wellness</div>
+        <div class="interest-body">Promoting holistic mental wellness frameworks for individuals and communities through evidence-based practices.</div>
+      </div>
+      <div class="interest-card reveal" style="transition-delay:0.1s">
+        <div class="interest-icon">📢</div>
+        <div class="interest-title">Mental Health Awareness</div>
+        <div class="interest-body">Reducing ignorance and stigma through nationwide campaigns, outreach programs, and educational content.</div>
+      </div>
+      <div class="interest-card reveal" style="transition-delay:0.15s">
+        <div class="interest-icon">💬</div>
+        <div class="interest-title">Mental Health Therapy</div>
+        <div class="interest-body">Bridging the gap between those in need and professional therapists, making mental health care accessible to all.</div>
+      </div>
+      <div class="interest-card reveal" style="transition-delay:0.2s">
+        <div class="interest-icon">🛡️</div>
+        <div class="interest-title">Suicide Prevention</div>
+        <div class="interest-body">First-aid mental health intervention through ASADS Listeners — trained advocates available around the clock.</div>
+      </div>
+      <div class="interest-card reveal" style="transition-delay:0.25s">
+        <div class="interest-icon">🎓</div>
+        <div class="interest-title">Mental Health Training</div>
+        <div class="interest-body">Equipping volunteers, organizations, and corporations with the skills to recognize and respond to mental health challenges.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section id="departments">
+  <div class="section-inner">
+    <div class="dept-intro">
+      <div class="reveal">
+        <div class="section-label">Organization Structure</div>
+        <h2 class="section-title">Thirteen <em>specialized</em> departments</h2>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <p class="section-body">
+          ASADS operates through a structured system of purpose-driven departments,
+          each led by a dedicated head and supported by passionate volunteers.
+          In return, ASADS invests in every volunteer's personal growth, skill development,
+          and mental health journey.
+        </p>
+      </div>
+    </div>
+    <div class="dept-grid">
+      <div class="dept-card reveal"><div class="dept-num">01</div><div class="dept-info"><div class="dept-name">ASADS Listeners Team</div><div class="dept-desc">Trained mental health advocates providing first-aid assistance and emotional support to those in crisis.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.05s"><div class="dept-num">02</div><div class="dept-info"><div class="dept-name">Support Group Team</div><div class="dept-desc">Designing and running structured support group sessions for individuals with specific mental health needs.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.1s"><div class="dept-num">03</div><div class="dept-info"><div class="dept-name">Content &amp; Social Media</div><div class="dept-desc">Producing impactful mental health content and managing ASADS's online presence across all platforms.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.12s"><div class="dept-num">04</div><div class="dept-info"><div class="dept-name">Media Team</div><div class="dept-desc">Graphics, photography, and videography — capturing and amplifying the organization's impact visually.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.14s"><div class="dept-num">05</div><div class="dept-info"><div class="dept-name">Mental Health Training</div><div class="dept-desc">Organizing professional training programs for volunteers, corporates, and community members.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.16s"><div class="dept-num">06</div><div class="dept-info"><div class="dept-name">Podcast Team</div><div class="dept-desc">Creating and distributing thought-leading mental health podcast content across all major streaming platforms.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.18s"><div class="dept-num">07</div><div class="dept-info"><div class="dept-name">Director of Programmes</div><div class="dept-desc">Coordinating every organizational event — from ideation to execution to post-event review.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.2s"><div class="dept-num">08</div><div class="dept-info"><div class="dept-name">Logistics Department</div><div class="dept-desc">Managing transportation, venue setup, equipment, and all operational logistics for programs.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.22s"><div class="dept-num">09</div><div class="dept-info"><div class="dept-name">Secretariat Department</div><div class="dept-desc">Maintaining organizational records, minutes, correspondence, and executive communication.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.24s"><div class="dept-num">10</div><div class="dept-info"><div class="dept-name">Finance Department</div><div class="dept-desc">Managing all financial affairs, accounts, and reporting with transparency and integrity.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.26s"><div class="dept-num">11</div><div class="dept-info"><div class="dept-name">Human Resources</div><div class="dept-desc">Recruiting, onboarding, and supporting every volunteer through their journey with ASADS.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.28s"><div class="dept-num">12</div><div class="dept-info"><div class="dept-name">Communications &amp; Partnerships</div><div class="dept-desc">Building strategic partnerships with NGOs, corporations, and individuals aligned with ASADS's mission.</div></div></div>
+      <div class="dept-card reveal" style="transition-delay:0.3s"><div class="dept-num">13</div><div class="dept-info"><div class="dept-name">Welfare Department</div><div class="dept-desc">Fostering unity, morale, and well-being among volunteers — because we care for our caregivers too.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="membership">
+  <div class="section-inner">
+    <div class="membership-layout">
+      <div class="reveal">
+        <div class="section-label">Join ASADS</div>
+        <h2 class="section-title">Become a <em>champion</em> for mental health</h2>
+        <p class="section-body">
+          ASADS membership builds a community of trained advocates who carry the mission of mental health awareness
+          into every corner of Nigeria. Your membership funds impactful programs and earns you
+          exclusive benefits.
+        </p>
+        <div class="member-card" style="margin-top:2rem">
+          <div class="section-label" style="margin-bottom:0.5rem">Annual Membership</div>
+          <div class="member-price"><span>₦</span>10,000</div>
+          <div class="member-period">Per year — renewable</div>
+          <ul class="member-benefits">
+            <li>Free mental health training sessions</li>
+            <li>ASADS writing materials &amp; ID card</li>
+            <li>Official ASADS membership shirt</li>
+            <li>Access to premium mental health resources</li>
+            <li>Opportunity to facilitate mental health sessions</li>
+            <li>Access to paid training upon qualification</li>
+          </ul>
+          <div class="member-note">
+            <strong style="color:var(--text0)">Volunteer Dues:</strong> ₦1,000/month (optional) — helps the organization expand its reach and impact across Nigeria.
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="section-label">How to Join</div>
+        <p class="section-body" style="margin-bottom:2rem">Our selection process ensures every member is genuinely committed to the mission of mental health advocacy.</p>
+        <ul class="requirements-list">
+          <li><span class="req-num">1</span><span>Receive an invitation to apply, then complete a structured series of questions, assessments, and an oral interview.</span></li>
+          <li><span class="req-num">2</span><span>Complete a biodata form and formal commitment form upon acceptance into the organization.</span></li>
+          <li><span class="req-num">3</span><span>Be assigned to a department that aligns with your areas of interest and professional skillset.</span></li>
+          <li><span class="req-num">4</span><span>Familiarize yourself with the organization's vision, mission, values, and your department's specific responsibilities.</span></li>
+          <li><span class="req-num">5</span><span>Attend weekly online meetings, quarterly offsite gatherings, training sessions, and organizational events.</span></li>
+          <li><span class="req-num">6</span><span>Maintain a performance score of at least 60% for the majority of your tenure to earn your certificate and recommendation letter.</span></li>
+        </ul>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--bg2);border-radius:14px;border:1px solid var(--border);">
+          <div class="section-label" style="margin-bottom:0.8rem">Bank Details</div>
+          <p style="font-size:0.85rem;color:var(--text1)">GTBank · EHI-Anti Suicide and Depression Squad</p>
+          <p style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--gold);margin-top:0.3rem;letter-spacing:0.05em">0470292342</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-inner">
+    <div class="section-label">Our Programs</div>
+    <h2 class="section-title reveal">What we <em>do</em>, consistently</h2>
+    <p class="section-body reveal" style="margin-bottom:0">
+      From flagship events to quiet one-on-one check-ins, ASADS shows up — because mental health advocacy is not a moment, it's a movement.
+    </p>
+    <div class="activities-grid">
+      <div class="activity-card reveal">
+        <div class="activity-dot"></div>
+        <div class="activity-name">Mental Health Speaks</div>
+        <div class="activity-desc">Our signature awareness event bringing together experts, advocates, and the public for frank conversations on mental health.</div>
+      </div>
+      <div class="activity-card reveal" style="transition-delay:0.1s">
+        <div class="activity-dot" style="background:var(--teal);box-shadow:0 0 12px rgba(54,201,174,0.4)"></div>
+        <div class="activity-name">ASADS Tour</div>
+        <div class="activity-desc">Taking mental health education directly into schools, churches, mosques, and workplaces across Nigeria.</div>
+      </div>
+      <div class="activity-card reveal" style="transition-delay:0.15s">
+        <div class="activity-dot" style="background:var(--rose);box-shadow:0 0 12px rgba(232,112,112,0.4)"></div>
+        <div class="activity-name">Paid &amp; Free Training</div>
+        <div class="activity-desc">Structured mental health training programs for individuals, volunteers, and corporate organizations at various price points.</div>
+      </div>
+      <div class="activity-card reveal" style="transition-delay:0.2s">
+        <div class="activity-dot"></div>
+        <div class="activity-name">Monthly Support Groups</div>
+        <div class="activity-desc">Safe, facilitated group sessions — online or in person — where participants share, heal, and grow together.</div>
+      </div>
+      <div class="activity-card reveal" style="transition-delay:0.25s">
+        <div class="activity-dot" style="background:var(--teal);box-shadow:0 0 12px rgba(54,201,174,0.4)"></div>
+        <div class="activity-name">Conversation &amp; Chill</div>
+        <div class="activity-desc">Informal, relaxed mental health conversations designed to lower barriers and normalize open dialogue about emotional well-being.</div>
+      </div>
+      <div class="activity-card reveal" style="transition-delay:0.3s">
+        <div class="activity-dot" style="background:var(--rose);box-shadow:0 0 12px rgba(232,112,112,0.4)"></div>
+        <div class="activity-name">Strategic Partnerships</div>
+        <div class="activity-desc">Collaborating with aligned NGOs, corporations, and mental health organizations to deliver amplified, large-scale impact.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORUMS -->
+<section id="forums">
+  <div class="section-inner">
+    <div class="forums-layout">
+      <div class="reveal">
+        <div class="section-label">Community</div>
+        <h2 class="section-title">The ASADS <em>Forums</em></h2>
+        <p class="section-body">
+          Four active online communities where mental health discussions happen daily.
+          A safe, moderated space for teachings, self-help tips, inspiration, and connection —
+          all content held in strict confidence.
+        </p>
+        <div class="forum-badges">
+          <span class="forum-badge">ASADS Forum 1</span>
+          <span class="forum-badge">ASADS Forum 2</span>
+          <span class="forum-badge">ASADS Forum 3</span>
+          <span class="forum-badge">ASADS Forum 4</span>
+        </div>
+        <p style="font-size:0.83rem;color:var(--text2);font-weight:300;line-height:1.7">
+          Forums are administered by the Coordinator, Assistant Coordinator,
+          and Head of Human Resources. Daily inspirational quotes, mental health teachings,
+          and self-help resources are shared every day.
+        </p>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="section-label">Forum Guidelines</div>
+        <ul class="rules-list">
+          <li>Keep posts relevant to mental health and community well-being.</li>
+          <li>Avoid data-heavy media (large videos or audio files) that strain members' data.</li>
+          <li>No advertisements — seek coordinator approval before sharing any promotions.</li>
+          <li>Resolve grievances privately; the forum is not for airing disputes.</li>
+          <li>Be kind, respectful, and open to the experiences and opinions of others.</li>
+          <li>Every voice counts — create space for every member to contribute.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <div class="section-label" style="justify-content:center">Take the First Step</div>
+    <h2 class="cta-title">
+      You don't have to face it <em>alone.</em>
+    </h2>
+    <p class="cta-body">
+      Whether you need a listening ear, professional support, or simply want to be
+      part of a community fighting for mental health — ASADS is here.
+    </p>
+    <div class="cta-actions">
+      <a href="mailto:antisuicideanddepressionsquad@gmail.com" class="btn-primary">Get Support Now ↗</a>
+      <a href="#membership" class="btn-secondary">Join Our Mission</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Find Us</div>
+      <h2 class="section-title" style="font-size:2.2rem">Contact <em>ASADS</em></h2>
+      <p style="font-size:0.85rem;color:var(--text1);font-weight:300;line-height:1.7;margin-bottom:1.5rem">
+        Reach out to us through any of these channels. We are always here.
+      </p>
+      <div class="social-links">
+        <a href="https://facebook.com" class="social-link" target="_blank">Facebook</a>
+        <a href="https://instagram.com/asads.ei" class="social-link" target="_blank">Instagram @asads.ei</a>
+        <a href="https://twitter.com/asads_ei" class="social-link" target="_blank">Twitter @asads_ei</a>
+      </div>
+    </div>
+    <div class="contact-grid reveal" style="transition-delay:0.15s">
+      <div class="contact-item">
+        <div class="contact-label">Website</div>
+        <div class="contact-value"><a href="http://www.asads.com.ng" target="_blank">www.asads.com.ng</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:antisuicideanddepressionsquad@gmail.com">antisuicideanddepressionsquad@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Bank</div>
+        <div class="contact-value">GTBank · 0470292342</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Account Name</div>
+        <div class="contact-value">EHI-Anti Suicide and Depression Squad</div>
+      </div>
+      <div class="contact-item" style="grid-column:1/-1;">
+        <div class="contact-label">Volunteer Inquiry</div>
+        <div class="contact-value">Contact our HR department via email to begin your application journey. We welcome passionate individuals aged 18–50.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2024 Anti Suicide &amp; Depression Squad (ASADS). All rights reserved.</div>
+  <div class="footer-mission">"Healing Nigeria, one conversation at a time."</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.borderBottomColor = window.scrollY > 50
+      ? 'rgba(232,166,60,0.12)' : 'rgba(255,255,255,0.06)';
+  });
+
+  // Animated counters
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count);
+    if (!target || isNaN(target)) return;
+    const suffix = el.textContent.includes('+') ? '+' : '';
+    let start = 0;
+    const step = Math.ceil(target / 40);
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = start + suffix;
+      if (start >= target) clearInterval(timer);
+    }, 40);
+  }
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-count]').forEach(animateCount);
+        statsObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  const statsEl = document.getElementById('stats');
+  if (statsEl) statsObserver.observe(statsEl);
+</script>
+</body>
+</html>
